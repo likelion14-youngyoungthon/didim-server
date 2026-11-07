@@ -22,13 +22,13 @@ public class GlobalExceptionHandler {
                 .findFirst()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .orElse(ErrorCode.BAD_REQUEST.getMessage());
-        log.warn("[handleValidationException] 요청 값 검증 실패: {}", detail);
+        log.warn("요청 값 검증 실패: {}", detail);
         return respond(ErrorCode.BAD_REQUEST, detail);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<GlobalResponse<?>> handleNotReadable(HttpMessageNotReadableException e) {
-        log.warn("[handleNotReadable] 요청 본문을 읽을 수 없음: {}", e.getMessage());
+        log.warn("요청 본문을 읽을 수 없음: {}", e.getMessage());
         return respond(ErrorCode.BAD_REQUEST, ErrorCode.BAD_REQUEST.getMessage());
     }
 
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalResponse<?>> handleException(Exception e) {
-        log.error("[handleException] 처리되지 않은 예외 발생", e);
+        log.error("처리되지 않은 예외", e);
         return respond(ErrorCode.INTERNAL_ERROR, ErrorCode.INTERNAL_ERROR.getMessage());
     }
 
