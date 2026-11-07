@@ -30,7 +30,7 @@ public class AnalyzeService {
     private static final String SCHEMA_NAME = "facts";
 
     // /judge 요청 필드 허용값. 라벨은 되묻기 선택지에 쓴다
-    private static final Map<String, Map<String, String>> ALLOWED = Map.of(
+    public static final Map<String, Map<String, String>> ALLOWED = Map.of(
             "disability_type", linked(
                     "physical", "지체", "brain_lesion", "뇌병변", "visual", "시각", "hearing", "청각",
                     "speech", "언어", "intellectual", "지적", "autism", "자폐성", "mental", "정신",
