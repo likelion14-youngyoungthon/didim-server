@@ -1,0 +1,10 @@
+[
+  {"id": "fee_reductions_7", "label": "감면서비스 대행 7종"},
+  {"id": "parking_sticker", "label": "장애인사용자동차등표지"},
+  {"id": "activity_support", "label": "장애인활동지원"},
+  {"id": "assistive_device", "label": "장애인보조기구 교부"},
+  {"id": "individual_plan", "label": "발달장애인 개인별지원계획"},
+  {"id": "diagnosis_fee", "label": "저소득 장애인 진단서 발급비 및 검사비"},
+  {"id": "highway_toll", "label": "고속도로 통행료 할인"},
+  {"id": "employment_referral", "label": "타기관 서비스 의뢰(고용)"}
+]
