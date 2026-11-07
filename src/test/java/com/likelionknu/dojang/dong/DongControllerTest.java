@@ -24,6 +24,7 @@ class DongControllerTest {
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.data.length()").value(39))
                 .andExpect(jsonPath("$.data[0].gu").value("처인구"))
-                .andExpect(jsonPath("$.data[0].dong").value("포곡읍"));
+                .andExpect(jsonPath("$.data[0].dong").value("포곡읍"))
+                .andExpect(jsonPath("$.data[?(@.dong == '양지읍')]").exists());
     }
 }
