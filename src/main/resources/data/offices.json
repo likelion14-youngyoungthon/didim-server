@@ -1,0 +1,439 @@
+{
+  "checked_at": "2026-11-07",
+  "dong_centers": [
+    {
+      "gu": "처인구",
+      "dong": "포곡읍",
+      "name": "포곡읍 행정복지센터",
+      "address": "경기도 용인시 처인구 포곡로 258",
+      "phone": "031-6193-5530",
+      "lat": 37.2777017,
+      "lng": 127.2308481,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=225"
+    },
+    {
+      "gu": "처인구",
+      "dong": "모현읍",
+      "name": "모현읍 행정복지센터",
+      "address": "경기도 용인시 처인구 모현읍 독점로 31-6",
+      "phone": "031-6193-5611",
+      "lat": 37.329922,
+      "lng": 127.242186,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=241"
+    },
+    {
+      "gu": "처인구",
+      "dong": "이동읍",
+      "name": "이동읍 행정복지센터",
+      "address": "경기도 용인시 처인구 이동읍 경기동로 673",
+      "phone": "031-6193-5691",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=258"
+    },
+    {
+      "gu": "처인구",
+      "dong": "남사읍",
+      "name": "남사읍 행정복지센터",
+      "address": "경기도 용인시 처인구 남사읍 내기로 22",
+      "phone": "031-6193-5641",
+      "lat": 37.115489,
+      "lng": 127.150235,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=277"
+    },
+    {
+      "gu": "처인구",
+      "dong": "원삼면",
+      "name": "원삼면 행정복지센터",
+      "address": "경기도 용인시 처인구 원삼면 원양로 64",
+      "phone": "031-6193-5742",
+      "lat": 37.1667,
+      "lng": 127.313009,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=295"
+    },
+    {
+      "gu": "처인구",
+      "dong": "백암면",
+      "name": "백암면 행정복지센터",
+      "address": "경기도 용인시 처인구 백암면 백암로 189",
+      "phone": "031-6193-5792",
+      "lat": 37.16396,
+      "lng": 127.375365,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=313"
+    },
+    {
+      "gu": "처인구",
+      "dong": "양지읍",
+      "name": "양지읍 행정복지센터",
+      "address": "경기도 용인시 처인구 양지읍 양지로105번길 5",
+      "phone": "031-6193-5842",
+      "lat": 37.235903,
+      "lng": 127.280068,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=339"
+    },
+    {
+      "gu": "처인구",
+      "dong": "중앙동",
+      "name": "중앙동 행정복지센터",
+      "address": "경기도 용인시 처인구 금령로90번길 3-20(김량장동, 중앙동행정복지센터)",
+      "phone": "031-6193-5894",
+      "lat": 37.235086,
+      "lng": 127.207709,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=369"
+    },
+    {
+      "gu": "처인구",
+      "dong": "역북동",
+      "name": "역북동 행정복지센터",
+      "address": "경기도 용인시 처인구 명지로 16",
+      "phone": "031-6193-5921",
+      "lat": 37.234553442150336,
+      "lng": 127.18816722992536,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=399"
+    },
+    {
+      "gu": "처인구",
+      "dong": "삼가동",
+      "name": "삼가동 행정복지센터",
+      "address": "경기도 용인시 처인구 동백죽전대로 61, 용인미르스타디움 3층",
+      "phone": "031-6193-5811",
+      "lat": 37.249474270474224,
+      "lng": 127.16587568627615,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=1566&brd_mgrno=0"
+    },
+    {
+      "gu": "처인구",
+      "dong": "유림1동",
+      "name": "유림1동 행정복지센터",
+      "address": "경기도 용인시 처인구 백옥대로 1315",
+      "phone": "031-6193-5954",
+      "lat": 37.25243,
+      "lng": 127.211692,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=430"
+    },
+    {
+      "gu": "처인구",
+      "dong": "유림2동",
+      "name": "유림2동 행정복지센터",
+      "address": "경기도 용인시 처인구 고림로 186-2(고림동), 2층",
+      "phone": "031-6193-5732",
+      "lat": 37.247683239161,
+      "lng": 127.221814429498,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=1724&brd_mgrno=0"
+    },
+    {
+      "gu": "처인구",
+      "dong": "동부동",
+      "name": "동부동 행정복지센터",
+      "address": "경기도 용인시 처인구 중부대로 1574",
+      "phone": "031-6193-5992",
+      "lat": 37.233049,
+      "lng": 127.219088,
+      "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=460"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "신갈동",
+      "name": "신갈동 행정복지센터",
+      "address": "경기도 용인시 기흥구 신갈로58번길 11(신갈동)",
+      "phone": "031-6193-6601",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0105.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "영덕1동",
+      "name": "영덕1동 행정복지센터",
+      "address": "경기도 용인시 기흥구 흥덕2로118번길 2(영덕동)",
+      "phone": "031-6193-6803",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0204.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "영덕2동",
+      "name": "영덕2동 행정복지센터",
+      "address": "경기도 용인시 기흥구 덕영대로2077번길 68(영덕동)",
+      "phone": "031-6193-6465",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1205.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "구갈동",
+      "name": "구갈동 행정복지센터",
+      "address": "경기도 용인시 기흥구 강남로 23 (구갈동)",
+      "phone": "031-6193-6621",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0305.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "상갈동",
+      "name": "상갈동 행정복지센터",
+      "address": "경기도 용인시 기흥구 상갈로 2 (상갈동행정복지센터)",
+      "phone": "031-6193-6650",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0405.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "보라동",
+      "name": "보라동 행정복지센터",
+      "address": "경기도 용인시 기흥구 한보라1로 48(보라동)",
+      "phone": "031-6193-6375",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1305.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "기흥동",
+      "name": "기흥동 행정복지센터",
+      "address": "경기도 용인시 기흥구 고매로43번길 12-14(공세동)",
+      "phone": "031-6193-6678",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0505.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "서농동",
+      "name": "서농동 행정복지센터",
+      "address": "경기도 용인시 기흥구 서천서로 79",
+      "phone": "031-6193-6690",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0604.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "구성동",
+      "name": "구성동 행정복지센터",
+      "address": "경기도 용인시 기흥구 구성로77번길 17(구성동)",
+      "phone": "031-6193-6701",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0705.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "마북동",
+      "name": "마북동 행정복지센터",
+      "address": "경기도 용인시 기흥구 구교동로118번길 16(마북동)",
+      "phone": "031-6193-6721",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0805.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "동백1동",
+      "name": "동백1동 행정복지센터",
+      "address": "경기도 용인시 기흥구 동백죽전대로 444 쥬네브썬월드빌딩 6층",
+      "phone": "031-6193-6038",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1405.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "동백2동",
+      "name": "동백2동 행정복지센터",
+      "address": "경기도 용인시 기흥구 동백중앙로 214(중동)",
+      "phone": "031-6193-6742",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0905.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "동백3동",
+      "name": "동백3동 행정복지센터",
+      "address": "경기도 용인시 기흥구 동백죽전대로527번길 99",
+      "phone": "031-6193-6216",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1505.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "상하동",
+      "name": "상하동 행정복지센터",
+      "address": "경기도 용인시 기흥구 어정로 62-23 (상하동)",
+      "phone": "031-6193-6795",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1005.asp"
+    },
+    {
+      "gu": "기흥구",
+      "dong": "보정동",
+      "name": "보정동 행정복지센터",
+      "address": "경기도 용인시 기흥구 죽전로40 (보정동)",
+      "phone": "031-6193-6771",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1105.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "풍덕천1동",
+      "name": "풍덕천1동 행정복지센터",
+      "address": "경기도 용인시 수지구 수지로342번길 3",
+      "phone": "031-6193-8602",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0104.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "풍덕천2동",
+      "name": "풍덕천2동 행정복지센터",
+      "address": "경기도 용인시 수지구 풍덕천로 51",
+      "phone": "031-6193-8633",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0204.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "신봉동",
+      "name": "신봉동 행정복지센터",
+      "address": "경기도 용인시 수지구 수지로 215",
+      "phone": "031-6193-8642",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0304.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "죽전1동",
+      "name": "죽전1동 행정복지센터",
+      "address": "경기도 용인시 수지구 대지로 15번길 50",
+      "phone": "031-6193-8662",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0404.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "죽전2동",
+      "name": "죽전2동 행정복지센터",
+      "address": "경기도 용인시 수지구 포은대로 523",
+      "phone": "031-6193-8695",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0504.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "죽전3동",
+      "name": "죽전3동 행정복지센터",
+      "address": "경기도 용인시 수지구 대지로 42",
+      "phone": "031-6193-8871",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center1004.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "동천동",
+      "name": "동천동 행정복지센터",
+      "address": "경기도 용인시 수지구 신수로783번길 40",
+      "phone": "031-6193-8702",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0604.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "상현1동",
+      "name": "상현1동 행정복지센터",
+      "address": "경기도 용인시 수지구 상현로 71",
+      "phone": "031-6193-8733",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0704.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "상현2동",
+      "name": "상현2동 행정복지센터",
+      "address": "경기도 용인시 수지구 만현로 48",
+      "phone": "031-6193-8752",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0804.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "상현3동",
+      "name": "상현3동 행정복지센터",
+      "address": "경기도 용인시 수지구 법조로 223",
+      "phone": "031-6193-8337",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center1104.asp"
+    },
+    {
+      "gu": "수지구",
+      "dong": "성복동",
+      "name": "성복동 행정복지센터",
+      "address": "경기도 용인시 수지구 성복1로 100",
+      "phone": "031-6193-8772",
+      "lat": null,
+      "lng": null,
+      "source": "https://www.sujigu.go.kr/lmth/06center0904.asp"
+    }
+  ],
+  "offices": [
+    {
+      "id": "mobility_center",
+      "name": "용인시 교통약자이동지원센터",
+      "address": "경기도 용인시 처인구 동백죽전대로 61 (용인미르스타디움)",
+      "phone": null,
+      "source": "규칙표 office_note(용인미르스타디움 내), 주소는 cheoingu.go.kr 삼가동 안내"
+    },
+    {
+      "id": "education_office",
+      "name": "용인교육지원청",
+      "address": null,
+      "phone": null,
+      "source": "규칙표 special_education"
+    },
+    {
+      "id": "nhis",
+      "name": "국민건강보험공단",
+      "address": null,
+      "phone": "1577-1000",
+      "source": "https://www.nhis.or.kr"
+    },
+    {
+      "id": "kead",
+      "name": "한국장애인고용공단",
+      "address": null,
+      "phone": "1588-1519",
+      "source": "https://www.kead.or.kr"
+    },
+    {
+      "id": "kspo",
+      "name": "국민체육진흥공단 스포츠강좌이용권",
+      "address": null,
+      "phone": "1551-0078",
+      "source": "https://www.guro.go.kr/www/contents.do?key=2946&"
+    },
+    {
+      "id": "city_hall_disability",
+      "name": "용인시청 장애인복지과",
+      "address": null,
+      "phone": null,
+      "source": "https://www.yongin.go.kr/common/orgcht/BD_selectOrgList.do"
+    }
+  ]
+}
