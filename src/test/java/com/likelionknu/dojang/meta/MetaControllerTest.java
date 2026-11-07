@@ -18,12 +18,12 @@ class MetaControllerTest {
     MockMvc mvc;
 
     @Test
-    void 규칙표_기준일을_돌려준다() throws Exception {
+    void 데이터_기준일을_돌려준다() throws Exception {
         mvc.perform(get("/api/v1/meta"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.data.rules_updated").value("2026-11-02"))
-                .andExpect(jsonPath("$.data.offices_updated").isEmpty())
+                .andExpect(jsonPath("$.data.offices_updated").value("2026-11-07"))
                 .andExpect(jsonPath("$.data.welfare_api_fetched").isEmpty());
     }
 }

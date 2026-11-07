@@ -3,6 +3,7 @@ package com.likelionknu.dojang.meta.service;
 import com.likelionknu.dojang.meta.data.dto.response.MetaResponseDto;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
@@ -16,8 +17,9 @@ public class MetaService {
         LocalDate child = rulesUpdated(jsonMapper, "data/rules_child_v2.json");
         LocalDate adult = rulesUpdated(jsonMapper, "data/rules_adult_v2.json");
         LocalDate rulesUpdated = child.isAfter(adult) ? child : adult;
-        // 기관 데이터와 복지 API 수집이 아직 없어서 null
-        this.meta = new MetaResponseDto(rulesUpdated, null, null);
+        LocalDate officesUpdated = LocalDate.parse(readTree(jsonMapper, "data/offices.json").path("checked_at").asString());
+        // 복지 API 수집은 아직 없어서 null
+        this.meta = new MetaResponseDto(rulesUpdated, officesUpdated, null);
     }
 
     public MetaResponseDto getMeta() {
@@ -25,7 +27,10 @@ public class MetaService {
     }
 
     private LocalDate rulesUpdated(JsonMapper jsonMapper, String path) throws IOException {
-        String updated = jsonMapper.readTree(new ClassPathResource(path).getInputStream()).path("meta").path("updated").asString();
-        return LocalDate.parse(updated);
+        return LocalDate.parse(readTree(jsonMapper, path).path("meta").path("updated").asString());
+    }
+
+    private JsonNode readTree(JsonMapper jsonMapper, String path) throws IOException {
+        return jsonMapper.readTree(new ClassPathResource(path).getInputStream());
     }
 }
