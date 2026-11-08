@@ -44,6 +44,13 @@ class OfficeControllerTest {
     }
 
     @Test
+    void 기흥_수지구도_좌표가_있다() throws Exception {
+        mvc.perform(get("/api/v1/offices").param("dong", "성복동").param("service", "dev_rehab_voucher"))
+                .andExpect(jsonPath("$.data[0].lat").isNumber())
+                .andExpect(jsonPath("$.data[0].lng").isNumber());
+    }
+
+    @Test
     void 이용기관은_아직_빈_목록() throws Exception {
         mvc.perform(get("/api/v1/offices").param("dong", "성복동").param("kind", "이용기관"))
                 .andExpect(status().isOk())

@@ -27,8 +27,8 @@
       "name": "이동읍 행정복지센터",
       "address": "경기도 용인시 처인구 이동읍 경기동로 673",
       "phone": "031-6193-5691",
-      "lat": null,
-      "lng": null,
+      "lat": 37.1411279,
+      "lng": 127.1961891,
       "source": "https://www.cheoingu.go.kr/home/townInfo.do?menu_no=258"
     },
     {
@@ -137,8 +137,8 @@
       "name": "신갈동 행정복지센터",
       "address": "경기도 용인시 기흥구 신갈로58번길 11(신갈동)",
       "phone": "031-6193-6601",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2725466,
+      "lng": 127.1070344,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0105.asp"
     },
     {
@@ -147,8 +147,8 @@
       "name": "영덕1동 행정복지센터",
       "address": "경기도 용인시 기흥구 흥덕2로118번길 2(영덕동)",
       "phone": "031-6193-6803",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2778228,
+      "lng": 127.0744959,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0204.asp"
     },
     {
@@ -157,8 +157,8 @@
       "name": "영덕2동 행정복지센터",
       "address": "경기도 용인시 기흥구 덕영대로2077번길 68(영덕동)",
       "phone": "031-6193-6465",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2666882,
+      "lng": 127.0918559,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1205.asp"
     },
     {
@@ -167,8 +167,8 @@
       "name": "구갈동 행정복지센터",
       "address": "경기도 용인시 기흥구 강남로 23 (구갈동)",
       "phone": "031-6193-6621",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2724289,
+      "lng": 127.127604,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0305.asp"
     },
     {
@@ -177,8 +177,8 @@
       "name": "상갈동 행정복지센터",
       "address": "경기도 용인시 기흥구 상갈로 2 (상갈동행정복지센터)",
       "phone": "031-6193-6650",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2665739,
+      "lng": 127.1076979,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0405.asp"
     },
     {
@@ -187,8 +187,8 @@
       "name": "보라동 행정복지센터",
       "address": "경기도 용인시 기흥구 한보라1로 48(보라동)",
       "phone": "031-6193-6375",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2512527,
+      "lng": 127.1084933,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1305.asp"
     },
     {
@@ -197,8 +197,8 @@
       "name": "기흥동 행정복지센터",
       "address": "경기도 용인시 기흥구 고매로43번길 12-14(공세동)",
       "phone": "031-6193-6678",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2314547,
+      "lng": 127.1154954,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0505.asp"
     },
     {
@@ -207,8 +207,8 @@
       "name": "서농동 행정복지센터",
       "address": "경기도 용인시 기흥구 서천서로 79",
       "phone": "031-6193-6690",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2379788,
+      "lng": 127.0683845,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0604.asp"
     },
     {
@@ -217,8 +217,8 @@
       "name": "구성동 행정복지센터",
       "address": "경기도 용인시 기흥구 구성로77번길 17(구성동)",
       "phone": "031-6193-6701",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2967587,
+      "lng": 127.1189878,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0705.asp"
     },
     {
@@ -227,8 +227,8 @@
       "name": "마북동 행정복지센터",
       "address": "경기도 용인시 기흥구 구교동로118번길 16(마북동)",
       "phone": "031-6193-6721",
-      "lat": null,
-      "lng": null,
+      "lat": 37.301579,
+      "lng": 127.1174479,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0805.asp"
     },
     {
@@ -237,8 +237,8 @@
       "name": "동백1동 행정복지센터",
       "address": "경기도 용인시 기흥구 동백죽전대로 444 쥬네브썬월드빌딩 6층",
       "phone": "031-6193-6038",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2780554,
+      "lng": 127.1517029,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1405.asp"
     },
     {
@@ -247,8 +247,8 @@
       "name": "동백2동 행정복지센터",
       "address": "경기도 용인시 기흥구 동백중앙로 214(중동)",
       "phone": "031-6193-6742",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2725338,
+      "lng": 127.1516873,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_0905.asp"
     },
     {
@@ -257,8 +257,8 @@
       "name": "동백3동 행정복지센터",
       "address": "경기도 용인시 기흥구 동백죽전대로527번길 99",
       "phone": "031-6193-6216",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2804162,
+      "lng": 127.1436937,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1505.asp"
     },
     {
@@ -267,8 +267,8 @@
       "name": "상하동 행정복지센터",
       "address": "경기도 용인시 기흥구 어정로 62-23 (상하동)",
       "phone": "031-6193-6795",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2705606,
+      "lng": 127.138456,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1005.asp"
     },
     {
@@ -277,8 +277,8 @@
       "name": "보정동 행정복지센터",
       "address": "경기도 용인시 기흥구 죽전로40 (보정동)",
       "phone": "031-6193-6771",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3201878,
+      "lng": 127.1130949,
       "source": "https://www.giheunggu.go.kr/_lmth/06_dong/dong_1105.asp"
     },
     {
@@ -287,8 +287,8 @@
       "name": "풍덕천1동 행정복지센터",
       "address": "경기도 용인시 수지구 수지로342번길 3",
       "phone": "031-6193-8602",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3279634,
+      "lng": 127.0949543,
       "source": "https://www.sujigu.go.kr/lmth/06center0104.asp"
     },
     {
@@ -297,8 +297,8 @@
       "name": "풍덕천2동 행정복지센터",
       "address": "경기도 용인시 수지구 풍덕천로 51",
       "phone": "031-6193-8633",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3194471,
+      "lng": 127.0887769,
       "source": "https://www.sujigu.go.kr/lmth/06center0204.asp"
     },
     {
@@ -307,8 +307,8 @@
       "name": "신봉동 행정복지센터",
       "address": "경기도 용인시 수지구 수지로 215",
       "phone": "031-6193-8642",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3206429,
+      "lng": 127.0836675,
       "source": "https://www.sujigu.go.kr/lmth/06center0304.asp"
     },
     {
@@ -317,8 +317,8 @@
       "name": "죽전1동 행정복지센터",
       "address": "경기도 용인시 수지구 대지로 15번길 50",
       "phone": "031-6193-8662",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3310353,
+      "lng": 127.1140184,
       "source": "https://www.sujigu.go.kr/lmth/06center0404.asp"
     },
     {
@@ -327,8 +327,8 @@
       "name": "죽전2동 행정복지센터",
       "address": "경기도 용인시 수지구 포은대로 523",
       "phone": "031-6193-8695",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3258738,
+      "lng": 127.1067354,
       "source": "https://www.sujigu.go.kr/lmth/06center0504.asp"
     },
     {
@@ -337,8 +337,8 @@
       "name": "죽전3동 행정복지센터",
       "address": "경기도 용인시 수지구 대지로 42",
       "phone": "031-6193-8871",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3279843,
+      "lng": 127.1141853,
       "source": "https://www.sujigu.go.kr/lmth/06center1004.asp"
     },
     {
@@ -347,8 +347,8 @@
       "name": "동천동 행정복지센터",
       "address": "경기도 용인시 수지구 신수로783번길 40",
       "phone": "031-6193-8702",
-      "lat": null,
-      "lng": null,
+      "lat": 37.341861,
+      "lng": 127.099224,
       "source": "https://www.sujigu.go.kr/lmth/06center0604.asp"
     },
     {
@@ -357,8 +357,8 @@
       "name": "상현1동 행정복지센터",
       "address": "경기도 용인시 수지구 상현로 71",
       "phone": "031-6193-8733",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3046658,
+      "lng": 127.0811119,
       "source": "https://www.sujigu.go.kr/lmth/06center0704.asp"
     },
     {
@@ -367,8 +367,8 @@
       "name": "상현2동 행정복지센터",
       "address": "경기도 용인시 수지구 만현로 48",
       "phone": "031-6193-8752",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3102879,
+      "lng": 127.086607,
       "source": "https://www.sujigu.go.kr/lmth/06center0804.asp"
     },
     {
@@ -377,8 +377,8 @@
       "name": "상현3동 행정복지센터",
       "address": "경기도 용인시 수지구 법조로 223",
       "phone": "031-6193-8337",
-      "lat": null,
-      "lng": null,
+      "lat": 37.2996344,
+      "lng": 127.0727037,
       "source": "https://www.sujigu.go.kr/lmth/06center1104.asp"
     },
     {
@@ -387,8 +387,8 @@
       "name": "성복동 행정복지센터",
       "address": "경기도 용인시 수지구 성복1로 100",
       "phone": "031-6193-8772",
-      "lat": null,
-      "lng": null,
+      "lat": 37.3164878,
+      "lng": 127.0690422,
       "source": "https://www.sujigu.go.kr/lmth/06center0904.asp"
     }
   ],
