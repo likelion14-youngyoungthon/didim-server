@@ -1,0 +1,1385 @@
+{
+  "meta": {
+    "title": "성인(18세 이상) 장애인 서비스 규칙표",
+    "updated": "2026-11-02",
+    "scope": "용인시 신규 등록 성인 장애인. 등록 신청서(장애인복지법 시행규칙 별지 제1호의4서식)에서 이미 신청한 항목은 in_registration_form으로 걸러 낸다.",
+    "registration_form_version": "장애인복지법 시행규칙 별지 제1호의4서식 2025.12.31 개정본(국가법령정보센터 원문 대조)",
+    "registration_form_items": "장애인등록, 장애인등록증(통합복지카드, 고속도로 통행료 할인 기능), 점자 스티커, 장애인사용자동차등표지, 장애인보조기구 교부(대여, 수리), 장애인활동지원(사회서비스이용권 신청서 추가), 거주시설 입소, 저소득 장애인 진단서 발급비 및 검사비, 감면서비스 대행 7종(휴대전화요금, 전기요금, 도시가스요금, 지역난방비, 초고속인터넷서비스이용료, TV 수신료, 자동차관련 지방세), 타기관 서비스 의뢰(고용: 실업급여, 취업성공패키지, 직업훈련, 직업진로상담, 취업지원 및 상담, 직업생활 지원 / 의료: 지역사회중심재활 사업)",
+    "registration_form_processing_time": "서식 상단 처리기간란: '별도안내', 안내 및 동의사항 1: '처리기간은 신청한 서비스에 따라 다릅니다.'",
+    "confidence_levels": {
+      "공식 원문 확인": "사회보장정보원 API(복지로 원문), 법령 원문(국가법령정보센터), 서식 원문으로 확인",
+      "2차 자료": "지자체 안내 페이지, 언론, 블로그 등으로 확인",
+      "추정": "원문 미확인, 일반 지식 기반"
+    },
+    "sources_common": [
+      "장애인 등록 및 서비스 신청서 서식: https://www.bokjiro.go.kr/ssis-tbu/CmmFileUtil/getDownload.do?atcflId=20230308UUWBM1330460025167326&atcflSn=1",
+      "장애인 등록 신청(복지로): https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006294&wlfareInfoReldBztpCd=01"
+    ],
+    "schema": "docs/rules_schema.md",
+    "converted_from": "data/rules_adult.json",
+    "registration_form_basis": "등록 신청서 기준: 장애인복지법 시행규칙 별지 제1호의4서식 2025.12.31 개정본(국가법령정보센터)으로 대조함"
+  },
+  "services": [
+    {
+      "id": "pension_basic",
+      "name": "장애인연금 기초급여",
+      "welfare_ids": [
+        "WLF00003249"
+      ],
+      "age_min": 18,
+      "age_max": 64,
+      "age_note": "18세 이상 65세가 되는 달의 전달까지(신청일이 속하는 월의 말일까지 18세가 되는 자 포함). 65세부터 기초연금으로 전환(별도 신청 필요)",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "severe",
+      "severity_note": "장애인연금법상 중증장애인(장애정도판정기준 제5장 판정기준 해당자, 또는 장애정도를 2개 이상 받은 장애인으로서 그 중 하나가 심한 사람)",
+      "income": {
+        "type": "other",
+        "pct": null,
+        "note": "본인과 배우자의 소득인정액이 선정기준액 이하. 2026년 선정기준액 단독가구 140만원, 부부가구 224만원. 직역연금 수급권자 및 배우자 제외(예외 있음)"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 별도 신청 필요. 등록 신청서의 '서비스 수급희망 이력제 사전 신청'에 동의하면 추후 수급 가능성 확인 시 안내만 받음"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인",
+      "form_names": [
+        "사회보장급여 신청(변경)서",
+        "[별지 1의2] 소득ㆍ재산 신고서",
+        "[별지 1의3] 금융정보 등(금융ㆍ신용ㆍ보험정보) 제공 동의서"
+      ],
+      "documents": [
+        "신분증",
+        "위 서식 3종(소득, 재산 증빙은 확인 필요)"
+      ],
+      "processing_days": 30,
+      "processing_source": "신청일부터 30일 이내 통지. 소득ㆍ재산 조사나 장애 정도 재심사에 시일이 필요한 경우 등은 60일 이내(장애인연금법 제10조 제3항, 제4항)",
+      "deadline": "상시. 신청한 달부터 지급(지급 개시 시기는 확인 필요)",
+      "situation_effects": [],
+      "exclusive_with": [
+        "disability_allowance"
+      ],
+      "exclusive_note": "장애수당(중증이 아닌 사람 대상이라 대상이 갈림). 65세 이상은 기초연금으로 전환",
+      "amount_note": "2026년 최고 월 349,700원. 부부 모두 수급 시 각 20% 감액, 초과분 감액 있음",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003249&wlfareInfoReldBztpCd=01",
+        "https://www.law.go.kr/법령/장애인연금법"
+      ]
+    },
+    {
+      "id": "pension_additional",
+      "name": "장애인연금 부가급여",
+      "welfare_ids": [
+        "WLF00003249"
+      ],
+      "age_min": 18,
+      "age_max": null,
+      "age_note": "18세 이상 장애인연금 수급자",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "severe",
+      "severity_note": "장애인연금법상 중증장애인(장애인연금 수급자)",
+      "income": {
+        "type": "other",
+        "pct": null,
+        "note": "장애인연금 수급자 중 기초생활보장(생계, 의료, 주거, 교육급여) 수급자, 차상위계층, 차상위 초과자. 금액: 기초생활보장수급자 65세 미만 9만원, 65세 이상 439,700원 / 차상위계층(일반) 8만원 / 차상위초과(일반) 65세 미만 3만원, 65세 이상 5만원 / 보장시설수급자 65세 미만 0원"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "auto",
+        "when": "always",
+        "note": "장애인연금 신청에 포함(기초급여와 같이 결정)"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인(장애인연금 신청)",
+      "form_names": [
+        "장애인연금과 동일"
+      ],
+      "documents": [
+        "장애인연금과 동일"
+      ],
+      "processing_days": 30,
+      "processing_source": "장애인연금과 동일(장애인연금법 제10조: 30일, 최대 60일)",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [
+        "disability_allowance"
+      ],
+      "exclusive_note": "장애수당",
+      "amount_note": "income_condition 참고",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003249&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "disability_allowance",
+      "name": "장애수당",
+      "welfare_ids": [
+        "WLF00003265"
+      ],
+      "age_min": 18,
+      "age_max": null,
+      "age_note": "신청 월 현재 18세 이상. 18~20세로 초중등교육법상 학교(특수학교 포함)에 재학(휴학 포함) 중인 자는 제외",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "mild",
+      "severity_note": "장애인연금법상 중증장애인이 아닌 등록장애인",
+      "income": {
+        "type": "basic_or_near_poor",
+        "pct": null,
+        "note": "국민기초생활보장 수급자 및 차상위계층(소득인정액 기준 중위소득 50% 이하, 2026년 4인 가구 3,247,369원 이하). 부양의무자 기준 미적용"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 별도 신청 필요"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인",
+      "form_names": [
+        "사회보장급여 신청(변경)서",
+        "[별지 1의3] 금융정보 등 제공 동의서(장애인복지법 시행규칙 제38조: 장애수당등 지급신청서 + 소득ㆍ재산신고서 + 금융정보등의 제공 동의서)"
+      ],
+      "documents": [
+        "신분증",
+        "위 서식"
+      ],
+      "processing_days": null,
+      "processing_source": "확인 필요. 법령상 일수 규정 미확인(장애인복지법 시행규칙 제38조 제3항은 '조사ㆍ확인한 후 그 결과를 신청인에게 통지'로만 규정)",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [
+        "pension_basic"
+      ],
+      "exclusive_note": "장애인연금(중증은 연금, 경증은 수당)",
+      "amount_note": "기초수급 및 차상위 월 6만원, 보장시설 수급자 월 3만원",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003265&wlfareInfoReldBztpCd=01",
+        "https://www.law.go.kr/법령/장애인복지법시행규칙"
+      ]
+    },
+    {
+      "id": "activity_support",
+      "name": "장애인활동지원",
+      "welfare_ids": [
+        "WLF00003260"
+      ],
+      "age_min": 6,
+      "age_max": 64,
+      "age_note": "6세 이상 ~ 64세(65세 도래 후 장기요양 등급외 판정자 등 예외 있음)",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "등록장애인 중 서비스지원 종합조사 결과 활동지원등급 판정을 받은 사람(장애 정도 자체 조건 없음)",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "소득기준 무관(소득에 따라 본인부담금 차등)"
+      },
+      "reg_form": "partial",
+      "reg_form_item": "activity_support",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 국민연금공단 방문 조사(종합조사) 후 수급자격심의"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인. 조사는 국민연금공단 지사",
+      "form_names": [
+        "사회보장급여(사회서비스이용권) 신청(변경)서"
+      ],
+      "documents": [],
+      "processing_days": 30,
+      "processing_source": "수급자격심의위원회는 신청서 제출일부터 30일 이내 심의 완료, 부득이한 사유 시 30일 범위에서 연장(장애인활동 지원에 관한 법률 제10조)",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "노인장기요양 수급자(65세 이후). 시설 입소, 입원 중에는 제한(퇴소, 퇴원 예정자는 예외)",
+      "amount_note": "활동지원등급별 월 바우처, 본인부담금 있음",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003260&wlfareInfoReldBztpCd=01",
+        "https://www.law.go.kr/법령/장애인활동지원에관한법률"
+      ]
+    },
+    {
+      "id": "yongin_activity_extra",
+      "name": "장애인활동지원 시추가지원(용인시)",
+      "welfare_ids": [
+        "WLF00004586"
+      ],
+      "age_min": 6,
+      "age_max": 64,
+      "age_note": "활동지원 대상 연령과 동일(아동, 청소년, 청년, 중장년)",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "장애인활동지원 서비스 1~14구간 대상자(1~13구간 20시간, 14구간 10시간). 기능제한점수 360점 이상 1인가구 및 취약가구 192시간은 신규신청 불가",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 활동지원 결정 후 별도 신청"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터(용인시청 장애인복지과 031-6193-2493)",
+      "form_names": [
+        "시 추가 신청서"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "활동지원 수급자격 결정 이후. 국비, 도비 시간 소진 후 사용, 당월 잔여시간 소멸",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "국ㆍ도비 이용시간이 480시간을 초과하면 시 추가 지원 불가",
+      "amount_note": "월 20시간(1~13구간) 또는 10시간(14구간), 본인부담금 없음",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004586&wlfareInfoReldBztpCd=02"
+      ]
+    },
+    {
+      "id": "dd_day_activity",
+      "name": "발달장애인 주간활동서비스",
+      "welfare_ids": [
+        "WLF00001165"
+      ],
+      "age_min": 18,
+      "age_max": 64,
+      "age_note": "만 18세 이상(사업안내상 65세 미만, 원문 확인 필요)",
+      "disability_types": [
+        "intellectual",
+        "autism"
+      ],
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "소득수준과 무관"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인. 조사는 시군구 및 발달장애인지원센터",
+      "form_names": [
+        "[별지 1의4] 사회보장급여(사회서비스이용권) 신청(변경)서",
+        "서식 제3호 주간활동서비스 신청자 기초상담 조사표"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "상시(제공기관 정원에 따라 대기 가능성, 확인 필요)",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "확인 필요(활동지원 시간 차감 등 연계 규정은 2026년 발달장애인 활동서비스 사업안내 확인 필요)",
+      "amount_note": "기본형 월 132시간, 확장형 월 176시간 바우처",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "age_max",
+        "documents",
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001165&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "dd_individual_plan",
+      "name": "발달장애인 개인별지원계획",
+      "welfare_ids": [],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "전 연령(발달장애인)",
+      "disability_types": [
+        "intellectual",
+        "autism"
+      ],
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음"
+      },
+      "reg_form": "partial",
+      "reg_form_item": "individual_plan",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 서비스 지원 신청 후 발달장애인지원센터가 계획 수립"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터(시군구) → 경기도발달장애인지원센터 지역센터",
+      "form_names": [
+        "개인별지원계획 수립 신청서 (등록 신청서 체크와 함께)"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "없음",
+      "amount_note": "현금 아님(계획 수립)",
+      "note": null,
+      "confidence": "guess",
+      "unverified_fields": [
+        "office_id",
+        "form_names",
+        "documents",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.law.go.kr/법령/발달장애인권리보장및지원에관한법률"
+      ]
+    },
+    {
+      "id": "special_transport",
+      "name": "특별교통수단(용인시 교통약자이동지원센터)",
+      "welfare_ids": [],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": [
+        "brain_lesion",
+        "visual",
+        "kidney"
+      ],
+      "disability_types_conditional": [
+        "physical",
+        "hearing",
+        "heart",
+        "respiratory",
+        "liver",
+        "ostomy",
+        "intellectual",
+        "autism",
+        "mental"
+      ],
+      "severity": "severe",
+      "severity_note": "장애의 정도가 심한 장애인 중 보행상 장애(교통약자법 시행규칙 제6조 제1항 제1호 중증보행장애인, 경기도 지침 별표1). 바로 대상: 지체(하지 절단, 하지 관절, 하지 기능, 척추), 뇌병변, 시각, 청각(평형), 신장. 서류 확인 후 대상: 지체(상지), 심장, 호흡기, 간, 장루요루, 지적, 자폐성, 정신(주민센터 발급 장애정도 심사결과 추가안내문 또는 보행상 장애 판정 서류). 비대상: 청각(청력), 언어, 안면, 뇌전증",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": null
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": null
+      },
+      "office_id": "mobility_center",
+      "office_note": "용인시 교통약자이동지원센터(용인미르스타디움 내)에 이용대상자 등록. 차량 배차는 경기도 광역이동지원센터 통합",
+      "form_names": [
+        "이용신청서",
+        "개인정보수집 및 이용, 제공에 관한 동의서"
+      ],
+      "documents": [
+        "장애인증명서",
+        "복지카드 사본",
+        "필요 시 장애정도 심사 결과안내문 또는 종합병원 진단서"
+      ],
+      "processing_days": null,
+      "processing_source": "규정 없음(이용대상자 심사는 시군 이동지원센터 별도 규정, 경기도 지침 제13조)",
+      "deadline": "상시(이용 전 이용대상자 등록 필요)",
+      "situation_effects": [
+        {
+          "tag": "wheelchair",
+          "effect": "note",
+          "note": "휠체어 이용자는 장애 유형, 정도와 무관하게 종합병원급 이상 진단서(휠체어 필요와 기간 명시)로 이용 가능"
+        }
+      ],
+      "exclusive_with": [],
+      "exclusive_note": null,
+      "amount_note": "기본 1,700원(10km), 5km당 100원 추가. 바우처택시 1,700원",
+      "note": "중복장애는 주장애나 부장애 중 하나가 심한 장애이고 보행상 장애가 있으면 대상. 휠체어를 쓰지 않는 중증 보행장애인은 바우처택시 대상. 장애 외 대상: 시행규칙 제6조 제1항 제3호 '노인 등 시군 조례로 정하는 사람'(용인 이용안내에 65세 이상 별도 기준 없음), 임산부는 바우처택시만(임신 확인일~출산 후 6개월). 보호자 동반 원칙, 동의서 제출 시 센터 판단으로 단독 탑승 가능",
+      "confidence": "official",
+      "unverified_fields": [
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.yonginnuri.or.kr/EgovPageLink.do?link=main/guide/iomGG_GuideInfo",
+        "https://ggsts.gg.go.kr/resources/file/useInfo20260831.pdf",
+        "https://www.law.go.kr/법령/교통약자의이동편의증진법시행규칙"
+      ]
+    },
+    {
+      "id": "assistive_device",
+      "name": "장애인보조기기 교부",
+      "welfare_ids": [
+        "WLF00003211"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": [
+        "physical",
+        "brain_lesion",
+        "visual",
+        "hearing",
+        "heart",
+        "respiratory",
+        "intellectual",
+        "autism",
+        "speech"
+      ],
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음(품목별 기준)",
+      "income": {
+        "type": "basic_or_near_poor",
+        "pct": null,
+        "note": "국민기초생활보장법 수급자 및 차상위계층(차상위계층 확인사업, 차상위자활, 차상위본인부담, 차상위장애인, 한부모 가족지원, 차상위 자산형성 지원 등)"
+      },
+      "reg_form": "yes",
+      "reg_form_item": "assistive_device",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 등록 신청서의 '장애인보조구 교부(대여ㆍ수리) 신청'란으로 신청 가능. 국민연금공단 최소적격성 검사 '적격' 필요"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인",
+      "form_names": [
+        "장애인 등록 및 서비스 신청서(별지 제1호의4서식) 보조기구 교부란"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "연 단위(예산 소진 시 마감 가능성, 확인 필요)",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "같은 품목의 건강보험, 의료급여 보조기기 지원(확인 필요)",
+      "amount_note": "품목별 현물",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents",
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003211&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "medicaid_assistive_device",
+      "name": "의료급여 장애인보조기기 지원",
+      "welfare_ids": [
+        "WLF00000067"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "other",
+        "pct": null,
+        "note": "의료급여 수급권자"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터",
+      "form_names": [],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "상시(품목별 내구연한)",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "건강보험 장애인보조기기 급여",
+      "amount_note": "유형별 기준액, 고시금액, 실구입금액 중 가장 낮은 금액",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "form_names",
+        "documents",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000067&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "medical_cost",
+      "name": "장애인의료비지원",
+      "welfare_ids": [
+        "WLF00003181"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "other",
+        "pct": null,
+        "note": "의료급여 2종 수급권자인 등록장애인 / 국민기초생활보장 수급자 중 근로능력세대의 등록장애인 / 건강보험 차상위 본인부담 경감대상자인 등록장애인(만성질환자 및 18세 미만 장애아동)"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "의료기관에서 본인부담금 사전차감(자격이 전산 반영되면 별도 신청 없이 적용되는 것으로 보임, 확인 필요)"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터, 의료기관(본인부담금 사전차감)",
+      "form_names": [],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "없음(급여 항목 본인부담금에 한함)",
+      "amount_note": "급여 항목 본인부담금",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "auto",
+        "form_names",
+        "documents",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003181&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "diagnosis_fee",
+      "name": "저소득장애인 진단서 발급비 및 검사비 지원",
+      "welfare_ids": [
+        "WLF00000099"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "basic",
+        "pct": null,
+        "note": "신규 등록: 기초생활수급자(생계, 의료, 주거, 교육급여 중 하나). 재판정: 기초생활수급자 또는 차상위계층(직권 재판정은 소득 무관)"
+      },
+      "reg_form": "yes",
+      "reg_form_item": "diagnosis_fee",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 등록 신청서 '저소득 장애인 진단서 발급비 및 검사비'란으로 신청"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터",
+      "form_names": [
+        "장애인 등록 및 서비스 신청서(별지 제1호의4서식)"
+      ],
+      "documents": [
+        "수급자의 복지계좌 통장사본 1부",
+        "진단서 발급비ㆍ검사비 영수증"
+      ],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "등록 신청 시(영수증 필요)",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "조정신청, 이의신청은 지원 불가",
+      "amount_note": "진단서 발급비: 지적, 자폐성, 정신장애 최대 4만원, 그 외 최대 1만 5천원 / 검사비 최대 10만원",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000099&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "yongin_diagnosis_extra",
+      "name": "장애인등급심사경비 시 추가지원(용인시)",
+      "welfare_ids": [
+        "WLF00001492"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "other",
+        "pct": null,
+        "note": "진단비: 생계급여, 의료급여 수급자로서 신규 장애등록하거나 의무재판정 시기가 도래한 장애인(기존 등록장애인이 새 장애를 추가하는 경우 포함). 검사비: 수급자 및 차상위계층으로서 재판정 대상(신규 등록은 해당 없음)"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 국비 지원 후 별도 신청"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터(용인시 장애인복지과 031-6193-3169)",
+      "form_names": [
+        "장애인등록 진단비(검사비) 신청서"
+      ],
+      "documents": [
+        "장애진단서",
+        "관련 영수증",
+        "통장사본"
+      ],
+      "processing_days": null,
+      "processing_source": "확인 필요(원문: '심사후 복지계좌로 입금')",
+      "deadline": "국비 진단서 발급비 지원 이후",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "조정신청, 이의신청은 지원 불가",
+      "amount_note": "진단비 국비 지원 후 최대 5만원, 검사비 최대 10만원",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001492&wlfareInfoReldBztpCd=02"
+      ]
+    },
+    {
+      "id": "self_reliance_loan",
+      "name": "장애인자립자금대여",
+      "welfare_ids": [
+        "WLF00000026"
+      ],
+      "age_min": 19,
+      "age_max": null,
+      "age_note": "19세 이상",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "median_pct",
+        "pct": 100,
+        "note": "가구 소득인정액이 기준중위소득 50% 초과 100% 이하(원문 예시: 2025년 4인 가구 3,048,887원 초과 6,097,773원 이하). 중위 50% 이하는 미소금융재단 장애인대출 이용. 금융채무불이행자 등 여신 취급제한자 불가",
+        "pct_min": 50
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 시군구 추천 후 국민은행 여신심사"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인. 대여기관 국민은행 지점",
+      "form_names": [
+        "사회보장급여(사회서비스이용권) 신청(변경)서",
+        "[별지 1의2] 소득ㆍ재산 신고서",
+        "개인정보 수집이용 및 제3자 제공동의서"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "자동차 구입비는 반드시 자동차 구입 전에 신청",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "생활가계자금, 주택전세자금, 학자금 용도 불가",
+      "amount_note": "무보증 가구당 1,200만원 이내(특수설비 자동차 1,500만원), 담보 5,000만원 이하, 연 2%, 5년 거치 5년 분할상환",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000026&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "parking_sticker",
+      "name": "장애인사용자동차등표지",
+      "welfare_ids": [],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음(주차가능 여부는 보행상 장애 판정에 따름)",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음. 차량 요건: 등록장애인 본인 또는 주민등록 주소를 같이 하며 함께 거주하는 배우자, 직계혈족, 형제자매 등 명의 자동차, 1년 이상 시설대여, 임차 자동차 등(장애인복지법 시행규칙 제26조)"
+      },
+      "reg_form": "yes",
+      "reg_form_item": "parking_sticker",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 등록 신청서 '장애인사용자동차등표지 발급 신청'란"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터",
+      "form_names": [
+        "장애인 등록 및 서비스 신청서(별지 제1호의4서식)"
+      ],
+      "documents": [
+        "시설대여계약서 또는 임차계약서 사본(해당 시). 자동차등록증은 담당 공무원이 행정정보 공동이용으로 확인"
+      ],
+      "processing_days": null,
+      "processing_source": "확인 필요(시행규칙 제27조에 일수 규정 없음)",
+      "deadline": "차량 보유 시. 양도, 폐차 시 즉시 반납",
+      "situation_effects": [
+        {
+          "tag": "has_car",
+          "effect": "note",
+          "note": "차량이 있으면 표지 발급 대상(본인 또는 함께 사는 가족 명의)"
+        }
+      ],
+      "exclusive_with": [],
+      "exclusive_note": "장애인 1명당 표지 발급 대수 제한(확인 필요)",
+      "amount_note": "해당 없음",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.law.go.kr/법령/장애인복지법시행규칙"
+      ]
+    },
+    {
+      "id": "fee_reductions_7",
+      "name": "감면서비스 대행 7종(휴대전화요금, 전기요금, 도시가스요금, 지역난방비, 초고속인터넷서비스이용료, TV 수신료, 자동차관련 지방세)",
+      "welfare_ids": [],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "항목별 상이(전기, 도시가스, 지역난방은 심한 장애 조건 등, 확인 필요)",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "항목별 상이(휴대전화 등은 소득 무관으로 알려짐, 확인 필요)"
+      },
+      "reg_form": "yes",
+      "reg_form_item": "fee_reductions_7",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "등록 신청서에 체크하고 '감면서비스 등의 신청 접수(대행)' 및 개인정보 제공 동의 시 읍면동이 기관별로 대행 신청"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터(등록 시 함께)",
+      "form_names": [
+        "장애인 등록 및 서비스 신청서(별지 제1호의4서식) 감면서비스 (대행)신청란"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요(기관별 상이)",
+      "deadline": "등록 신청 시. 누락 시 각 기관에 개별 신청",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "같은 요금의 다른 복지할인(기초수급, 차상위 등)과 중복 적용 제한 가능(확인 필요)",
+      "amount_note": "항목별 상이",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "disability_types",
+        "severity",
+        "income",
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/CmmFileUtil/getDownload.do?atcflId=20230308UUWBM1330460025167326&atcflSn=1"
+      ]
+    },
+    {
+      "id": "transport_discounts",
+      "name": "철도, 항공, 고속도로 통행료 할인",
+      "welfare_ids": [],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "철도: 심한 장애인 50%(보호자 1명 포함), 심하지 않은 장애인 30%(토, 일, 공휴일 제외). 항공: 항공사별(확인 필요). 고속도로: 확인 필요",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음"
+      },
+      "reg_form": "yes",
+      "reg_form_item": "highway_toll",
+      "auto": {
+        "type": "auto",
+        "when": "always",
+        "note": "철도, 항공: 신청 불필요, 예매, 탑승 시 장애인등록증(복지카드) 제시. 고속도로: 등록 신청서로 할인카드 발급 신청"
+      },
+      "office_id": "dong_center",
+      "office_note": "철도: 코레일 예매 시 / 항공: 항공사 / 고속도로: 주소지 읍면동 행정복지센터",
+      "form_names": [
+        "고속도로만 장애인 등록 및 서비스 신청서(별지 제1호의4서식)"
+      ],
+      "documents": [
+        "장애인등록증(복지카드)"
+      ],
+      "processing_days": null,
+      "processing_source": "해당 없음(철도, 항공). 고속도로 카드 발급은 확인 필요",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "없음",
+      "amount_note": "disability_severity 참고",
+      "note": null,
+      "confidence": "secondary",
+      "unverified_fields": [
+        "항공 할인율",
+        "고속도로 할인 차량 요건",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.wikitree.co.kr/articles/1156230",
+        "https://www.bokjiro.go.kr/ssis-tbu/CmmFileUtil/getDownload.do?atcflId=20230308UUWBM1330460025167326&atcflSn=1"
+      ]
+    },
+    {
+      "id": "car_excise_tax",
+      "name": "장애인 승용차 개별소비세 면제",
+      "welfare_ids": [],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "severe",
+      "severity_note": "장애의 정도가 심한 장애인",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음. 본인 명의 또는 주민등록표상 생계를 같이 하는 배우자, 직계존비속 등과 공동명의 승용차 1대"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음. 구입 시 판매처(자동차 영업점)에 면세 신청"
+      },
+      "office_id": "car_dealer",
+      "office_note": "자동차 판매처(면세 반출), 관할 세무서",
+      "form_names": [],
+      "documents": [
+        "장애인증명서",
+        "주민등록등본 등(확인 필요)"
+      ],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "차량 구입 시. 5년 이내 양도 시 잔존 연도분 추징 가능",
+      "situation_effects": [
+        {
+          "tag": "has_car",
+          "effect": "note",
+          "note": "차량 구입 시점에 판매처에 면세 신청"
+        }
+      ],
+      "exclusive_with": [],
+      "exclusive_note": "장애인 1명당 1대",
+      "amount_note": "개별소비세 최대 500만원 면제(교육세 연동 감면). 배기량 제한은 지방세 감면 조건과 혼선 있음",
+      "note": null,
+      "confidence": "secondary",
+      "unverified_fields": [
+        "form_names",
+        "documents",
+        "processing_days",
+        "배기량 조건",
+        "적용 기한"
+      ],
+      "source_urls": [
+        "https://www.incheon.go.kr/welfare/WE070101/view?nttNo=8567",
+        "https://www.hyundai.com/kr/ko/e/customer/guide/system/tax-car",
+        "https://www.law.go.kr/법령/개별소비세법"
+      ]
+    },
+    {
+      "id": "health_insurance_reduction",
+      "name": "장애인 건강보험료 경감",
+      "welfare_ids": [
+        "WLF00006257"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "장애정도가 심한 장애인 30% 경감, 심하지 않은 장애인 20% 경감",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음. 지역가입자 세대"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "auto",
+        "when": "always",
+        "note": "등록 정보 연계로 공단이 적용하는 것으로 보임(확인 필요). 복지로 원문은 신청기관을 주민센터, 국민건강보험공단으로 표기"
+      },
+      "office_id": "nhis",
+      "office_note": "국민건강보험공단 지사(1577-1000) 또는 주소지 읍면동 행정복지센터",
+      "form_names": [],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "직장가입자는 해당 없음. 다른 경감 사유와 중복 시 적용 방식 확인 필요",
+      "amount_note": "지역보험료 20~30% 경감",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "auto",
+        "form_names",
+        "documents",
+        "processing_days"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006257&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "sports_voucher",
+      "name": "장애인스포츠강좌이용권",
+      "welfare_ids": [
+        "WLF00003173"
+      ],
+      "age_min": 5,
+      "age_max": 69,
+      "age_note": "5~69세, 출생연도 기준(2027년분: 1958.1.1~2022.12.31 출생 등록 장애인 본인)",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "소득 무관. 선정 순위: 1순위 5~18세 수급자, 차상위, 한부모 / 2순위 19세 이상 수급자 / 3순위 19세 이상 차상위, 한부모 / 4순위 5~18세 비저소득 / 5순위 19세 이상 비저소득"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": null
+      },
+      "office_id": "kspo",
+      "office_note": "장애인스포츠강좌이용권 누리집(dvoucher.kspo.or.kr) 개인 이용권 신청, 또는 주민등록 관할 시군구청, 주민센터 방문 서면 신청. 선정은 시군구",
+      "form_names": [],
+      "documents": [
+        "방문 신청 시 신분증, 가족관계증명서 등"
+      ],
+      "processing_days": null,
+      "processing_source": "신청 마감 후 12월 중 시군구 선정, 선정자에게 문자 통지(2027년분 공고)",
+      "deadline": "매년 11월 전국 동시 신청(2027년분: 2026.11.9~11.27 23:59, 선착순 아님). 기존 이용자도 매년 다시 신청(10월 31일까지 자동신청 동의 시 자동 접수, 자동 선정 아님). 12월 중 선정, 이용은 1월~12월 10일",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "스포츠강좌이용권(일반)과 중복 불가",
+      "amount_note": "월 11만원 이내 수강료, 연 12개월 최대 132만원(2027년분). 3개월 연속 미사용 시 자동 중단",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "form_names",
+        "documents"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003173&wlfareInfoReldBztpCd=01",
+        "https://dvoucher.kspo.or.kr/dvoucher/bbs/B0000078/view.do?nttId=64395&menuNo=800018&topMenuNo=800017",
+        "https://dvoucher.kspo.or.kr/dvoucher/bbs/B0000078/view.do?nttId=63562&menuNo=800018&topMenuNo=800017"
+      ],
+      "birth_year_min": 1958,
+      "birth_year_max": 2022
+    },
+    {
+      "id": "housing_modification",
+      "name": "장애인 주택개조사업",
+      "welfare_ids": [
+        "WLF00006260"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음(유형, 정도는 개조 항목 선정에 반영)",
+      "income": {
+        "type": "other",
+        "pct": null,
+        "note": "등록장애인 가구 소득이 전년도 도시근로자 가구당 월평균 소득액 이하(주거약자법 시행령 제7조). 예산 초과 시 1순위 기준 중위소득 50% 이하"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음"
+      },
+      "office_id": "city_hall_disability",
+      "office_note": "용인시 담당부서(등록주소지 관할 시ㆍ군 담당부서로 문의, 부서명 확인 필요)",
+      "form_names": [],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "연 단위 예산 사업(시 공고 시기 확인 필요)",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "확인 필요",
+      "amount_note": "편의시설 설치, 개선 비용",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "office_id",
+        "form_names",
+        "documents",
+        "processing_days",
+        "deadline"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006260&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "job_program",
+      "name": "장애인일자리지원(일반형, 복지일자리, 특화형)",
+      "welfare_ids": [
+        "WLF00000025"
+      ],
+      "age_min": 18,
+      "age_max": null,
+      "age_note": "18세 이상",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음(선발 기준표에 장애정도 반영)",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "소득 조건 없음(선발 시 소득수준 반영). 미취업 장애인"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터, 시군구",
+      "form_names": [
+        "서식7 장애인일자리사업 참여신청서",
+        "서식8 개인정보 수집 이용 및 제3자 제공안내"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "연 단위 모집(지자체 공고, 시기 확인 필요)",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "국민건강보험 직장가입자, 사업자등록자, 타 재정지원 일자리사업 참여자, 2년 이상 연속 참여자, 최근 1년 내 참여 중단 조치자 선발 제외",
+      "amount_note": "2026년 월: 일반형 전일제 2,060,740원, 시간제 1,030,370원, 복지일자리 552,160원, 특화형 1,291,660원",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents",
+        "processing_days",
+        "deadline"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000025&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "employment_package",
+      "name": "장애인취업성공패키지(한국장애인고용공단)",
+      "welfare_ids": [
+        "WLF00003245",
+        "WLF00004655"
+      ],
+      "age_min": 18,
+      "age_max": 69,
+      "age_note": "만 18세 이상 69세 이하(69세 초과도 상담 후 참여 가능)",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음(장애인고용촉진 및 직업재활법 시행령 제3조, 제4조 기준)",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "소득 무관. 중위소득 60% 이하 저소득층은 별도 서비스"
+      },
+      "reg_form": "partial",
+      "reg_form_item": "employment_referral",
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "등록 신청서에서 체크하면 고용 기관으로 의뢰(참여 신청은 공단에서 별도)"
+      },
+      "office_id": "kead",
+      "office_note": "한국장애인고용공단 지사(1588-1519)",
+      "form_names": [],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "상시",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "국민취업지원제도와 동시 참여 불가로 추정(확인 필요)",
+      "amount_note": "단계별 참여수당",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "form_names",
+        "documents",
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004655&wlfareInfoReldBztpCd=01",
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003245&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "energy_voucher",
+      "name": "에너지바우처",
+      "welfare_ids": [
+        "WLF00000072"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "basic",
+        "pct": null,
+        "note": "국민기초생활보장법상 생계, 의료, 주거, 교육급여 중 하나 이상 수급자"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음(전년도 수급 세대 자동 신청 여부 확인 필요)"
+      },
+      "office_id": "dong_center",
+      "office_note": "주민등록상 거주지 읍면동 행정복지센터 또는 복지로 온라인",
+      "form_names": [
+        "2026년 에너지이용권 서식(복지로 첨부)"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "하절기 7~9월, 동절기 10월~익년 5월 사용. 신청 기간은 2026년 사업안내서 확인 필요",
+      "situation_effects": [],
+      "exclusive_with": [],
+      "exclusive_note": "확인 필요(연탄쿠폰, 등유바우처 등)",
+      "amount_note": "세대원수에 따라 4단계 차등",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "auto",
+        "documents",
+        "processing_days",
+        "deadline",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000072&wlfareInfoReldBztpCd=01"
+      ]
+    },
+    {
+      "id": "yongin_birth_grant",
+      "name": "용인시 장애인가정 출산지원금",
+      "welfare_ids": [
+        "WLF00005510"
+      ],
+      "age_min": null,
+      "age_max": null,
+      "age_note": "제한 없음(출산한 등록장애인 부 또는 모)",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "심한 장애 부 또는 모 100만원, 심하지 않은 장애 부 또는 모 70만원",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "없음. 신생아 출생일 기준 180일 전부터 용인시 거주"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터(용인시 장애인복지과 031-6193-3169)",
+      "form_names": [
+        "신청서 및 동의서(읍면동 비치)"
+      ],
+      "documents": [
+        "신분증",
+        "통장사본",
+        "등본 및 초본(동의서 제출 시 담당자 확인)"
+      ],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "신생아 출생일로부터 1년 이내",
+      "situation_effects": [
+        {
+          "tag": "newborn",
+          "effect": "show_only_if",
+          "note": "출생일로부터 1년 이내 신청"
+        }
+      ],
+      "exclusive_with": [],
+      "exclusive_note": "확인 필요(부모 모두 장애인일 때 중복 여부)",
+      "amount_note": "100만원 또는 70만원, 1회",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005510&wlfareInfoReldBztpCd=02"
+      ]
+    },
+    {
+      "id": "yongin_mobility_repair",
+      "name": "장애인 이동기기 보장구 수리비용 지원(용인시)",
+      "welfare_ids": [
+        "WLF00000866"
+      ],
+      "age_min": 0,
+      "age_max": null,
+      "age_note": "제한 없음",
+      "disability_types": "all",
+      "disability_types_conditional": [],
+      "severity": "any",
+      "severity_note": "조건 없음",
+      "income": {
+        "type": "none",
+        "pct": null,
+        "note": "기초생활수급자 및 차상위: 수리비 전액(연 20만원 이내) / 그 외 장애인: 수리비 50%(연 10만원 이내)"
+      },
+      "reg_form": "no",
+      "reg_form_item": null,
+      "auto": {
+        "type": "none",
+        "when": "always",
+        "note": "없음"
+      },
+      "office_id": "dong_center",
+      "office_note": "주소지 읍면동 행정복지센터 → 수리 의뢰서 발급 → 용인시 지정 수리업체",
+      "form_names": [
+        "신청서(읍면동)"
+      ],
+      "documents": [],
+      "processing_days": null,
+      "processing_source": "확인 필요",
+      "deadline": "수리 필요 시(연간 한도)",
+      "situation_effects": [
+        {
+          "tag": "wheelchair",
+          "effect": "show_only_if",
+          "note": "휠체어, 전동스쿠터 사용 시"
+        }
+      ],
+      "exclusive_with": [],
+      "exclusive_note": "등록 신청서의 보조기구 수리(국비)와 관계 확인 필요",
+      "amount_note": "income_condition 참고",
+      "note": null,
+      "confidence": "official",
+      "unverified_fields": [
+        "documents",
+        "processing_days",
+        "exclusive_with"
+      ],
+      "source_urls": [
+        "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000866&wlfareInfoReldBztpCd=02"
+      ]
+    }
+  ]
+}
