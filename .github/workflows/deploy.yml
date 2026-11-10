@@ -44,4 +44,6 @@ jobs:
             gunzip -c image.tar.gz | docker load
             rm image.tar.gz
             docker compose up -d
+            # 앱 컨테이너가 새로 뜨면 nginx가 예전 주소를 들고 있어 502가 난다
+            docker compose restart nginx
             docker image prune -f
