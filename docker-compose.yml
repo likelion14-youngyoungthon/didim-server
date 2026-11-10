@@ -2,6 +2,28 @@ services:
   app:
     image: dojang-server:latest
     env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: Asia/Seoul
+    # 서버 메모리가 2GB라 버퍼를 줄인다
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--innodb-buffer-pool-size=64M"]
+    volumes:
+      - dojang-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     restart: unless-stopped
 
   nginx:
@@ -18,3 +40,6 @@ services:
     depends_on:
       - app
     restart: unless-stopped
+
+volumes:
+  dojang-db:

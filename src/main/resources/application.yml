@@ -7,7 +7,21 @@ spring:
     import: optional:file:.env[.properties]
   jackson:
     property-naming-strategy: SNAKE_CASE
+  jpa:
+    open-in-view: false
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  expire-days: 7
+
+kakao:
+  rest-key: ${KAKAO_REST_KEY:}
+  client-secret: ${KAKAO_CLIENT_SECRET:}
+  redirect-uri: ${KAKAO_REDIRECT_URI:http://localhost:5173/oauth/kakao}
+
+demo-login:
+  enabled: ${DEMO_LOGIN_ENABLED:true}

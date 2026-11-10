@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
     BAD_REQUEST(400, "잘못된 요청입니다."),
+    UNAUTHORIZED(401, "로그인이 필요합니다."),
     NOT_FOUND(404, "정보를 찾을 수 없습니다."),
     METHOD_NOT_ALLOWED(405, "지원하지 않는 요청 방식입니다."),
     INTERNAL_ERROR(500, "서버 오류가 발생했습니다."),
-    AI_FAILED(502, "AI 호출에 실패했습니다.");
+    AI_FAILED(502, "AI 호출에 실패했습니다."),
+    KAKAO_FAILED(502, "카카오 로그인 서버에 연결하지 못했습니다.");
 
     private final int httpStatus;
     private final String message;
