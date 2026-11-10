@@ -79,6 +79,6 @@ public class OfficeService {
     }
 
     private OfficeResponseDto toResponse(Office office) {
-        return new OfficeResponseDto(office.id(), office.name(), RECEPTION, office.address(), office.phone(), null, null, checkedAt);
+        return new OfficeResponseDto(office.id(), office.name(), RECEPTION, office.address(), office.phone(), office.lat(), office.lng(), checkedAt);
     }
 }
