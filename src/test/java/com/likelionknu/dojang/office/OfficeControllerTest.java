@@ -41,6 +41,10 @@ class OfficeControllerTest {
                 .andExpect(jsonPath("$.data[0].phone").value("1588-1519"));
         mvc.perform(get("/api/v1/offices").param("dong", "백암면").param("service", "car_excise_tax"))
                 .andExpect(jsonPath("$.data.length()").value(0));
+        mvc.perform(get("/api/v1/offices").param("dong", "백암면").param("service", "special_transport"))
+                .andExpect(jsonPath("$.data[0].id").value("mobility_center"))
+                .andExpect(jsonPath("$.data[0].phone").value("1666-0420"))
+                .andExpect(jsonPath("$.data[0].lat").isNumber());
     }
 
     @Test
