@@ -149,6 +149,29 @@ class AuthControllerTest {
     }
 
     @Test
+    void 처음_로그인이_동시에_와도_회원은_하나() throws Exception {
+        given(kakaoClient.fetchKakaoId(eq("race"), anyString())).willReturn(1005L);
+        java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(5);
+        java.util.List<java.util.concurrent.Future<Integer>> results = new java.util.ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            results.add(pool.submit(() -> login("race").andReturn().getResponse().getStatus()));
+        }
+        for (java.util.concurrent.Future<Integer> r : results) {
+            org.assertj.core.api.Assertions.assertThat(r.get()).isEqualTo(200);
+        }
+        pool.shutdown();
+        login("race").andExpect(jsonPath("$.data.is_new").value(false));
+    }
+
+    @Test
+    void JSON이_아니면_400() throws Exception {
+        String auth = token(1006L, "media");
+        mvc.perform(put("/api/v1/me/progress").header("Authorization", auth).content("x"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("E400"));
+    }
+
+    @Test
     void 브라우저_사전요청은_토큰_없이_통과() throws Exception {
         mvc.perform(options("/api/v1/me/progress")
                         .header("Origin", "http://localhost:5173")

@@ -3,6 +3,7 @@ package com.likelionknu.dojang.common.response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -54,6 +55,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GlobalResponse<?>> handleNotReadable(HttpMessageNotReadableException e) {
         log.warn("요청 본문을 읽을 수 없음: {}", e.getMessage());
         return respond(ErrorCode.BAD_REQUEST, ErrorCode.BAD_REQUEST.getMessage());
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<GlobalResponse<?>> handleMediaTypeNotSupported(HttpMediaTypeNotSupportedException e) {
+        return respond(ErrorCode.BAD_REQUEST, "Content-Type은 application/json이어야 합니다.");
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

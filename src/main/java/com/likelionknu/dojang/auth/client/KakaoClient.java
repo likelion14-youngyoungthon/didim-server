@@ -7,12 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
+
+import java.net.http.HttpClient;
+import java.time.Duration;
 
 /** 인가 코드로 카카오 회원번호만 받는다. 동의항목(닉네임, 이메일 등)은 요청하지 않는다. */
 @Slf4j
@@ -21,13 +25,17 @@ public class KakaoClient {
     private static final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String USER_URL = "https://kapi.kakao.com/v2/user/me";
 
-    private final RestClient restClient = RestClient.create();
+    private final RestClient restClient;
     private final String restKey;
     private final String clientSecret;
 
     public KakaoClient(@Value("${kakao.rest-key}") String restKey, @Value("${kakao.client-secret}") String clientSecret) {
         this.restKey = restKey;
         this.clientSecret = clientSecret;
+        JdkClientHttpRequestFactory requestFactory = new JdkClientHttpRequestFactory(
+                HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build());
+        requestFactory.setReadTimeout(Duration.ofSeconds(10));
+        this.restClient = RestClient.builder().requestFactory(requestFactory).build();
     }
 
     public long fetchKakaoId(String code, String redirectUri) {
@@ -50,10 +58,16 @@ public class KakaoClient {
                     .body(form)
                     .retrieve()
                     .body(KakaoToken.class);
+            if (token == null || token.accessToken() == null) {
+                throw new AuthException(ErrorCode.KAKAO_FAILED);
+            }
             KakaoUser user = restClient.get().uri(USER_URL)
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + token.accessToken())
                     .retrieve()
                     .body(KakaoUser.class);
+            if (user == null || user.id() == null) {
+                throw new AuthException(ErrorCode.KAKAO_FAILED);
+            }
             return user.id();
         } catch (HttpClientErrorException e) {
             // 코드 만료·재사용, redirect_uri 불일치가 대부분이다

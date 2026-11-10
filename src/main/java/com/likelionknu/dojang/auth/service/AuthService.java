@@ -8,10 +8,8 @@ import com.likelionknu.dojang.common.response.ErrorCode;
 import com.likelionknu.dojang.member.entity.Member;
 import com.likelionknu.dojang.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -34,7 +32,6 @@ public class AuthService {
         this.demoLoginEnabled = demoLoginEnabled;
     }
 
-    @Transactional
     public LoginResponseDto loginWithKakao(KakaoLoginRequestDto request) {
         String redirectUri = request.redirectUri() == null || request.redirectUri().isBlank()
                 ? defaultRedirectUri : request.redirectUri();
@@ -42,7 +39,6 @@ public class AuthService {
     }
 
     /** 팀 테스트·시연용 공용 계정. 모두 같은 계정을 쓰므로 저장 내용도 공유된다. */
-    @Transactional
     public LoginResponseDto loginAsDemo() {
         if (!demoLoginEnabled) {
             throw new AuthException(ErrorCode.NOT_FOUND, "테스트 로그인이 꺼져 있습니다.");
@@ -51,8 +47,17 @@ public class AuthService {
     }
 
     private LoginResponseDto issue(long kakaoId) {
-        Optional<Member> found = memberRepository.findByKakaoId(kakaoId);
-        Member member = found.orElseGet(() -> memberRepository.save(Member.join(kakaoId)));
-        return new LoginResponseDto(jwtProvider.issue(member.getId()), "Bearer", jwtProvider.expiresInSeconds(), found.isEmpty());
+        Member member = memberRepository.findByKakaoId(kakaoId).orElse(null);
+        boolean isNew = false;
+        if (member == null) {
+            try {
+                member = memberRepository.saveAndFlush(Member.join(kakaoId));
+                isNew = true;
+            } catch (DataIntegrityViolationException e) {
+                // 같은 계정의 첫 로그인이 동시에 들어오면 먼저 저장된 회원을 쓴다
+                member = memberRepository.findByKakaoId(kakaoId).orElseThrow();
+            }
+        }
+        return new LoginResponseDto(jwtProvider.issue(member.getId()), "Bearer", jwtProvider.expiresInSeconds(), isNew);
     }
 }
