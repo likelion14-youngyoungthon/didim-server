@@ -18,8 +18,20 @@ server {
     ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
 
+    # 10MiB 음성과 multipart 헤더 여유. 초과 시 API 공통 오류 형식 유지
+    client_max_body_size 11m;
+    error_page 413 = @upload_too_large;
+
+    location @upload_too_large {
+        default_type application/json;
+        add_header Access-Control-Allow-Origin $upload_cors_origin always;
+        add_header Vary Origin always;
+        return 400 '{"code":"E400","data":null,"message":"업로드 요청 용량을 초과했습니다. 음성은 10MiB 이하로 보내주세요."}';
+    }
+
     location / {
         proxy_pass http://app:8080;
+        proxy_read_timeout 65s;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
