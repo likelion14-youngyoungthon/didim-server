@@ -24,6 +24,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final JsonMapper jsonMapper;
+    private final MemberProgressValidator progressValidator;
 
     @Transactional(readOnly = true)
     public ProgressResponseDto getProgress(Long memberId) {
@@ -36,6 +37,7 @@ public class MemberService {
     @Transactional
     public ProgressResponseDto saveProgress(Long memberId, ProgressRequestDto request) {
         Member member = find(memberId);
+        progressValidator.validate(request);
         String profile = request.profile() == null ? null : jsonMapper.writeValueAsString(request.profile());
         member.saveProgress(profile, jsonMapper.writeValueAsString(request.services()));
         return new ProgressResponseDto(request.profile(), request.services(), member.getProgressUpdatedAt());
