@@ -34,7 +34,7 @@ common/
   - 실패: `{"code": "E400", "data": null, "message": "사유"}` → 예외를 던지면 `GlobalExceptionHandler`가 만든다
 - 에러 code는 E + HTTP 상태코드(E400, E404, E500, E502). AI 호출 실패는 `ErrorCode.AI_FAILED`(E502)
 - JSON 필드는 snake_case
-- 로그인과 DB 없음. 대화와 결과는 저장하지 않는다
+- 로그인은 선택이다. 로그인 회원의 프로필·신청 현황은 `/api/v1/me/progress`로 저장·조회한다(운영 MariaDB, 로컬 메모리 H2). 대화 원문은 저장하지 않는다.
 
 ## 지킬 것
 
