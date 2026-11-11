@@ -37,7 +37,7 @@ public class BasisService {
             - line: 고른 문장 번호
             - text: 그 문장에서 조건 부분만 한 글자도 바꾸지 않고 복사한다. 자르기 어려우면 문장 전체를 쓴다.
             - matches: 그 문장이 다루는 사용자 값의 key. 사용자 값 중에 없으면 null
-            - summary: 사용자 값과 고른 조건이 어떻게 연결되는지 한국어 1~2문장. 원문에 없는 내용을 더하지 않는다.
+            - summary: 사용자 값과 고른 조건이 어떻게 연결되는지 한국어 1~2문장. 원문에 없는 내용을 더하지 않는다. 가운뎃점(·) 대신 쉼표를 쓴다.
               받을 수 있다고 단정하지 않는다. "~조건과 관련됩니다", "~를 확인해 보세요"처럼 쓴다.
               key 이름이나 영문을 쓰지 않는다. 예: "만 4세, 자폐성 장애로 나이와 장애 유형 조건과 관련됩니다."
             """;
@@ -159,7 +159,8 @@ public class BasisService {
             }
         }
 
-        String summary = result.path("summary").asString("").strip();
+        // 프롬프트로 막아도 가끔 섞여 나와서 코드로 한 번 더 바꾼다
+        String summary = result.path("summary").asString("").replace("·", ", ").strip();
         if (quotes.isEmpty() || summary.isEmpty()) {
             summary = null;
         } else if (summary.length() > MAX_SUMMARY) {

@@ -36,7 +36,7 @@ class BasisControllerTest {
                   {"line": 0, "text": "18세 미만 장애아동", "matches": "age"},
                   {"line": 1, "text": "중위소득 180% 이하만 가능", "matches": "household"},
                   {"line": 99, "text": "없는 문장", "matches": null}
-                ], "summary": "만 4세라서 나이 조건과 관련됩니다."}
+                ], "summary": "만 4세라서 나이·장애 유형 조건과 관련됩니다."}
                 """));
 
         mvc.perform(get("/api/v1/services/dev_rehab_voucher/basis").param("age", "4").param("disability_type", "autism"))
@@ -48,7 +48,7 @@ class BasisControllerTest {
                 .andExpect(jsonPath("$.data.quotes[0].checked_at").exists())
                 .andExpect(jsonPath("$.data.quotes[1].text").value("(소득기준) 기준중위소득 180% 이하"))
                 .andExpect(jsonPath("$.data.quotes[1].matches").doesNotExist())
-                .andExpect(jsonPath("$.data.summary").value("만 4세라서 나이 조건과 관련됩니다."));
+                .andExpect(jsonPath("$.data.summary").value("만 4세라서 나이, 장애 유형 조건과 관련됩니다."));
     }
 
     @Test
