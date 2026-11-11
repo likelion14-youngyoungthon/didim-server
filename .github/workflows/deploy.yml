@@ -30,7 +30,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: image.tar.gz,docker-compose.yml,nginx/default.conf.template
+          source: image.tar.gz,docker-compose.yml,nginx/default.conf.template,nginx/05-upload-cors.sh
           target: /home/ubuntu/dojang
 
       - name: restart
