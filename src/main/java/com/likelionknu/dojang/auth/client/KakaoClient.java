@@ -18,7 +18,7 @@ import org.springframework.web.client.RestClientException;
 import java.net.http.HttpClient;
 import java.time.Duration;
 
-/** 인가 코드로 카카오 회원번호만 받는다. 동의항목(닉네임, 이메일 등)은 요청하지 않는다. */
+/** 인가 코드로 카카오 회원번호와 닉네임만 받는다. 닉네임은 응답에만 쓰고 저장하지 않는다. */
 @Slf4j
 @Component
 public class KakaoClient {
@@ -38,7 +38,7 @@ public class KakaoClient {
         this.restClient = RestClient.builder().requestFactory(requestFactory).build();
     }
 
-    public long fetchKakaoId(String code, String redirectUri) {
+    public KakaoProfile fetchProfile(String code, String redirectUri) {
         if (restKey.isBlank()) {
             log.error("KAKAO_REST_KEY가 설정되지 않았습니다.");
             throw new AuthException(ErrorCode.KAKAO_FAILED);
@@ -68,7 +68,7 @@ public class KakaoClient {
             if (user == null || user.id() == null) {
                 throw new AuthException(ErrorCode.KAKAO_FAILED);
             }
-            return user.id();
+            return new KakaoProfile(user.id(), user.nickname());
         } catch (HttpClientErrorException e) {
             // 코드 만료·재사용, redirect_uri 불일치가 대부분이다
             log.warn("카카오 인증 실패: {}", e.getResponseBodyAsString());
@@ -79,9 +79,21 @@ public class KakaoClient {
         }
     }
 
+    public record KakaoProfile(long id, String nickname) {
+    }
+
     private record KakaoToken(@JsonProperty("access_token") String accessToken) {
     }
 
-    private record KakaoUser(Long id) {
+    private record KakaoUser(Long id, @JsonProperty("kakao_account") KakaoAccount account) {
+        String nickname() {
+            return account == null || account.profile() == null ? null : account.profile().nickname();
+        }
+    }
+
+    private record KakaoAccount(Profile profile) {
+    }
+
+    private record Profile(String nickname) {
     }
 }

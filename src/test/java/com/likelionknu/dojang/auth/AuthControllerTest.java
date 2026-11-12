@@ -1,6 +1,7 @@
 package com.likelionknu.dojang.auth;
 
 import com.likelionknu.dojang.auth.client.KakaoClient;
+import com.likelionknu.dojang.auth.client.KakaoClient.KakaoProfile;
 import com.likelionknu.dojang.auth.exception.AuthException;
 import com.likelionknu.dojang.common.response.ErrorCode;
 import com.jayway.jsonpath.JsonPath;
@@ -42,21 +43,23 @@ class AuthControllerTest {
     }
 
     private String token(long kakaoId, String code) throws Exception {
-        given(kakaoClient.fetchKakaoId(eq(code), anyString())).willReturn(kakaoId);
+        given(kakaoClient.fetchProfile(eq(code), anyString())).willReturn(new KakaoProfile(kakaoId, null));
         String body = login(code).andReturn().getResponse().getContentAsString();
         return "Bearer " + JsonPath.read(body, "$.data.access_token");
     }
 
     @Test
     void 처음_로그인하면_회원이_생기고_다시_하면_같은_회원() throws Exception {
-        given(kakaoClient.fetchKakaoId(eq("first"), anyString())).willReturn(1001L);
+        given(kakaoClient.fetchProfile(eq("first"), anyString())).willReturn(new KakaoProfile(1001L, "김멋사"));
         login("first").andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.access_token").isString())
                 .andExpect(jsonPath("$.data.token_type").value("Bearer"))
                 .andExpect(jsonPath("$.data.expires_in").value(604800))
-                .andExpect(jsonPath("$.data.is_new").value(true));
+                .andExpect(jsonPath("$.data.is_new").value(true))
+                .andExpect(jsonPath("$.data.nickname").value("김멋사"))
+                .andExpect(jsonPath("$.data.is_demo").value(false));
         login("first").andExpect(jsonPath("$.data.is_new").value(false));
-        verify(kakaoClient, org.mockito.Mockito.times(2)).fetchKakaoId("first", "http://localhost:5173/oauth/kakao");
+        verify(kakaoClient, org.mockito.Mockito.times(2)).fetchProfile("first", "http://localhost:5173/oauth/kakao");
     }
 
     @Test
@@ -93,7 +96,7 @@ class AuthControllerTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value("E401"));
 
-        given(kakaoClient.fetchKakaoId(eq("again"), anyString())).willReturn(1003L);
+        given(kakaoClient.fetchProfile(eq("again"), anyString())).willReturn(new KakaoProfile(1003L, null));
         login("again").andExpect(jsonPath("$.data.is_new").value(true));
     }
 
@@ -111,12 +114,12 @@ class AuthControllerTest {
 
     @Test
     void 카카오_실패와_잘못된_요청() throws Exception {
-        given(kakaoClient.fetchKakaoId(eq("expired"), anyString()))
+        given(kakaoClient.fetchProfile(eq("expired"), anyString()))
                 .willThrow(new AuthException(ErrorCode.UNAUTHORIZED, "카카오 인증에 실패했습니다. 다시 로그인해 주세요."));
         login("expired").andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.message").value("카카오 인증에 실패했습니다. 다시 로그인해 주세요."));
 
-        given(kakaoClient.fetchKakaoId(eq("down"), anyString())).willThrow(new AuthException(ErrorCode.KAKAO_FAILED));
+        given(kakaoClient.fetchProfile(eq("down"), anyString())).willThrow(new AuthException(ErrorCode.KAKAO_FAILED));
         login("down").andExpect(status().isBadGateway()).andExpect(jsonPath("$.code").value("E502"));
 
         login("").andExpect(status().isBadRequest());
@@ -131,26 +134,26 @@ class AuthControllerTest {
     }
 
     @Test
-    void 테스트_로그인은_공용_계정_하나를_쓴다() throws Exception {
+    void 체험_로그인은_부를_때마다_새_임시_회원() throws Exception {
         String body = mvc.perform(post("/api/v1/auth/demo"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.access_token").isString())
+                .andExpect(jsonPath("$.data.is_demo").value(true))
+                .andExpect(jsonPath("$.data.nickname").isEmpty())
                 .andReturn().getResponse().getContentAsString();
         String auth = "Bearer " + JsonPath.read(body, "$.data.access_token");
         mvc.perform(put("/api/v1/me/progress").header("Authorization", auth)
                         .contentType(MediaType.APPLICATION_JSON).content(PROGRESS))
                 .andExpect(status().isOk());
 
-        String again = mvc.perform(post("/api/v1/auth/demo"))
-                .andExpect(jsonPath("$.data.is_new").value(false))
-                .andReturn().getResponse().getContentAsString();
+        String again = mvc.perform(post("/api/v1/auth/demo")).andReturn().getResponse().getContentAsString();
         mvc.perform(get("/api/v1/me/progress").header("Authorization", "Bearer " + JsonPath.read(again, "$.data.access_token")))
-                .andExpect(jsonPath("$.data.services[0].id").value("dev_rehab_voucher"));
+                .andExpect(jsonPath("$.data.services.length()").value(0));
     }
 
     @Test
     void 처음_로그인이_동시에_와도_회원은_하나() throws Exception {
-        given(kakaoClient.fetchKakaoId(eq("race"), anyString())).willReturn(1005L);
+        given(kakaoClient.fetchProfile(eq("race"), anyString())).willReturn(new KakaoProfile(1005L, null));
         java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(5);
         java.util.List<java.util.concurrent.Future<Integer>> results = new java.util.ArrayList<>();
         for (int i = 0; i < 5; i++) {

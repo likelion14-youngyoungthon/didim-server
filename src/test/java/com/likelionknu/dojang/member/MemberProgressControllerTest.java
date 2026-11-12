@@ -2,6 +2,7 @@ package com.likelionknu.dojang.member;
 
 import com.jayway.jsonpath.JsonPath;
 import com.likelionknu.dojang.auth.client.KakaoClient;
+import com.likelionknu.dojang.auth.client.KakaoClient.KakaoProfile;
 import com.likelionknu.dojang.auth.service.JwtProvider;
 import com.likelionknu.dojang.member.entity.Member;
 import com.likelionknu.dojang.member.repository.MemberRepository;
@@ -60,7 +61,7 @@ class MemberProgressControllerTest {
         assertThat(stored.getServices()).contains("submitted");
         assertThat(stored.getProgressUpdatedAt()).isNotNull();
 
-        given(kakaoClient.fetchKakaoId(eq("progress-relogin"), anyString())).willReturn(member.getKakaoId());
+        given(kakaoClient.fetchProfile(eq("progress-relogin"), anyString())).willReturn(new KakaoProfile(member.getKakaoId(), null));
         String login = mvc.perform(post("/api/v1/auth/kakao").contentType(MediaType.APPLICATION_JSON)
                         .content("{\"code\":\"progress-relogin\"}"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.data.is_new").value(false))
