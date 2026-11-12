@@ -55,7 +55,7 @@ public class JudgeService {
     }
 
     public Map<String, JudgeResponseDto> judge(JudgeRequestDto request) {
-        validate(request);
+        validateRequest(request);
         var offices = officeService.getOffices(request.dong(), null, null);
         Map<String, Office> officeMap = new HashMap<>();
         offices.forEach(o -> officeMap.put(o.id(), new Office(o.id(), o.name(), o.phone())));
@@ -158,7 +158,7 @@ public class JudgeService {
         return high <= pct && (min == null || low >= min) ? 1 : 0;
     }
 
-    private void validate(JudgeRequestDto q) {
+    public void validateRequest(JudgeRequestDto q) {
         if (q == null) throw new JudgeException("요청 본문이 필요합니다.");
         if (q.age() == null) throw new JudgeException("age: 나이가 필요합니다.");
         allowed("disability_type", q.disabilityType(), TYPES);

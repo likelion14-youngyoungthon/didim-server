@@ -19,13 +19,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/kakao")
-    @Operation(summary = "카카오 로그인", description = "인가 코드를 받아 JWT를 발급합니다. 처음이면 회원을 만들고 is_new가 true입니다.")
+    @Operation(summary = "카카오 로그인", description = "인가 코드를 받아 JWT를 발급합니다. 처음이면 회원을 만들고 is_new가 true입니다. nickname은 카카오 닉네임이며 저장하지 않습니다.")
     public GlobalResponse<LoginResponseDto> loginWithKakao(@Valid @RequestBody KakaoLoginRequestDto request) {
         return GlobalResponse.ok(authService.loginWithKakao(request));
     }
 
     @PostMapping("/demo")
-    @Operation(summary = "테스트 로그인", description = "카카오 없이 공용 테스트 계정 토큰을 발급합니다. 저장 내용은 모든 테스트 사용자가 공유합니다. 서버 설정 DEMO_LOGIN_ENABLED가 false면 404입니다.")
+    @Operation(summary = "테스트 로그인", description = "카카오 없이 체험용 임시 회원 토큰을 발급합니다. 부를 때마다 새 회원이라 저장 내용이 섞이지 않습니다. 서버 설정 DEMO_LOGIN_ENABLED가 false면 404입니다.")
     public GlobalResponse<LoginResponseDto> loginAsDemo() {
         return GlobalResponse.ok(authService.loginAsDemo());
     }
