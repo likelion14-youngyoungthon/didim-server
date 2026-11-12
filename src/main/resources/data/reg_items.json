@@ -1,10 +1,10 @@
 [
-  {"id": "fee_reductions_7", "label": "감면서비스 대행 7종"},
-  {"id": "parking_sticker", "label": "장애인사용자동차등표지"},
-  {"id": "activity_support", "label": "장애인활동지원"},
-  {"id": "assistive_device", "label": "장애인보조기구 교부"},
-  {"id": "individual_plan", "label": "발달장애인 개인별지원계획"},
-  {"id": "diagnosis_fee", "label": "저소득 장애인 진단서 발급비 및 검사비"},
-  {"id": "highway_toll", "label": "고속도로 통행료 할인"},
-  {"id": "employment_referral", "label": "타기관 서비스 의뢰(고용)"}
+  {"id": "fee_reductions_7", "label": "감면서비스 대행 7종", "easy_label": "감면 서비스 7종", "category": "discount"},
+  {"id": "parking_sticker", "label": "장애인사용자동차등표지", "easy_label": "장애인 자동차 표지", "category": "car"},
+  {"id": "activity_support", "label": "장애인활동지원", "easy_label": "장애인 활동지원", "category": "care"},
+  {"id": "assistive_device", "label": "장애인보조기구 교부", "easy_label": "장애인 보조기구", "category": "device"},
+  {"id": "individual_plan", "label": "발달장애인 개인별지원계획", "easy_label": "발달장애인 개인별지원계획", "category": "counsel"},
+  {"id": "diagnosis_fee", "label": "저소득 장애인 진단서 발급비 및 검사비", "easy_label": "진단서 발급비·검사비", "category": "medical"},
+  {"id": "highway_toll", "label": "고속도로 통행료 할인", "easy_label": "고속도로 통행료 할인", "category": "transport"},
+  {"id": "employment_referral", "label": "타기관 서비스 의뢰(고용)", "easy_label": "고용 서비스 연결", "category": "job"}
 ]

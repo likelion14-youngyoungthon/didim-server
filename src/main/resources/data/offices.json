@@ -394,15 +394,6 @@
   ],
   "offices": [
     {
-      "id": "mobility_center",
-      "name": "용인시 교통약자이동지원센터",
-      "address": "경기도 용인시 처인구 동백죽전대로 61 (용인미르스타디움)",
-      "phone": "1666-0420",
-      "lat": 37.249624,
-      "lng": 127.165149,
-      "source": "https://www.yonginnuri.or.kr (콜센터 대표번호, 주소). 좌표는 카카오 장소 검색"
-    },
-    {
       "id": "education_office",
       "name": "용인교육지원청",
       "address": "경기도 용인시 처인구 중부대로1161번길 69",
@@ -410,6 +401,15 @@
       "lat": 37.2426232,
       "lng": 127.1797311,
       "source": "https://www.goeyi.kr (대표번호, 주소). 좌표는 카카오 장소 검색"
+    },
+    {
+      "id": "mobility_center",
+      "name": "용인시 교통약자이동지원센터",
+      "address": "경기도 용인시 처인구 동백죽전대로 61 (용인미르스타디움)",
+      "phone": "1666-0420",
+      "lat": 37.249624,
+      "lng": 127.165149,
+      "source": "https://www.yonginnuri.or.kr (콜센터 대표번호, 주소). 좌표는 카카오 장소 검색"
     },
     {
       "id": "nhis",
