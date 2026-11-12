@@ -24,6 +24,8 @@ class RegItemControllerTest {
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.data.length()").value(8))
                 .andExpect(jsonPath("$.data[0].id").value("fee_reductions_7"))
-                .andExpect(jsonPath("$.data[0].label").value("감면서비스 대행 7종"));
+                .andExpect(jsonPath("$.data[0].label").value("감면서비스 대행 7종"))
+                .andExpect(jsonPath("$.data[0].easy_label").value("감면 서비스 7종"))
+                .andExpect(jsonPath("$.data[0].category").value("discount"));
     }
 }

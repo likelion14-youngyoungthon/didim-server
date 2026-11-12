@@ -28,6 +28,8 @@ class OfficeControllerTest {
                 .andExpect(jsonPath("$.data[0].address").value("경기도 용인시 처인구 백암면 백암로 189"))
                 .andExpect(jsonPath("$.data[0].phone").value("031-6193-5792"))
                 .andExpect(jsonPath("$.data[0].lat").value(37.16396))
+                .andExpect(jsonPath("$.data[1].id").value("education_office"))
+                .andExpect(jsonPath("$.data[2].id").value("mobility_center"))
                 .andExpect(jsonPath("$.data[0].checked_at").value("2026-11-07"));
     }
 
