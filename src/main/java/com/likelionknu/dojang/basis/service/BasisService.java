@@ -1,7 +1,6 @@
 package com.likelionknu.dojang.basis.service;
 
-import com.likelionknu.dojang.analyze.service.AnalyzeService;
-import com.likelionknu.dojang.analyze.service.LlmClient;
+import com.likelionknu.dojang.common.ai.LlmClient;
 import com.likelionknu.dojang.basis.data.dto.response.BasisResponseDto;
 import com.likelionknu.dojang.basis.data.dto.response.BasisResponseDto.QuoteDto;
 import com.likelionknu.dojang.basis.exception.BasisException;
@@ -57,6 +56,17 @@ public class BasisService {
                                     "required", List.of("line", "text", "matches"))),
                     "summary", Map.of("type", "string")),
             "required", List.of("quotes", "summary"));
+
+    private static final Map<String, Map<String, String>> LABELS = Map.of(
+            "disability_type", linked(
+                    "physical", "지체", "brain_lesion", "뇌병변", "visual", "시각", "hearing", "청각",
+                    "speech", "언어", "intellectual", "지적", "autism", "자폐성", "mental", "정신",
+                    "kidney", "신장", "heart", "심장", "respiratory", "호흡기", "liver", "간",
+                    "facial", "안면", "ostomy", "장루요루", "epilepsy", "뇌전증"),
+            "severity", linked("severe", "심한 장애", "mild", "심하지 않은 장애"),
+            "status", linked("basic", "기초생활수급", "near_poor", "차상위", "neither", "둘 다 아님"),
+            "income_band", linked("le120", "기준 중위소득 120% 이하", "le180", "기준 중위소득 180% 이하", "over180", "그보다 많음"),
+            "tags", linked("daycare", "어린이집 다님", "has_car", "차 있음", "wheelchair", "휠체어 사용", "newborn", "출산"));
 
     private record Line(String text, String source) {
     }
@@ -114,7 +124,7 @@ public class BasisService {
         // 요약에 영문 코드가 나오지 않게 한글 이름을 같이 넘긴다
         Map<String, Object> labeled = new LinkedHashMap<>();
         facts.forEach((key, value) -> {
-            Map<String, String> labels = AnalyzeService.ALLOWED.getOrDefault(key, Map.of());
+            Map<String, String> labels = LABELS.getOrDefault(key, Map.of());
             labeled.put(key, value instanceof List<?> list
                     ? list.stream().map(item -> labels.getOrDefault(item, String.valueOf(item))).toList()
                     : labels.getOrDefault(value, String.valueOf(value)));
@@ -160,5 +170,13 @@ public class BasisService {
 
     private JsonNode readTree(String path) throws IOException {
         return jsonMapper.readTree(new ClassPathResource(path).getInputStream());
+    }
+
+    private static Map<String, String> linked(String... pairs) {
+        Map<String, String> map = new LinkedHashMap<>();
+        for (int i = 0; i < pairs.length; i += 2) {
+            map.put(pairs[i], pairs[i + 1]);
+        }
+        return map;
     }
 }

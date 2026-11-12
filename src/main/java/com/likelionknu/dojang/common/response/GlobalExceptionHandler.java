@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartException;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @Slf4j
 @RestControllerAdvice
@@ -62,22 +59,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<GlobalResponse<?>> handleMediaTypeNotSupported(HttpMediaTypeNotSupportedException e) {
-        return respond(ErrorCode.BAD_REQUEST, "Content-Type이 API에서 지원하는 형식과 다릅니다.");
-    }
-
-    @ExceptionHandler(MissingServletRequestPartException.class)
-    public ResponseEntity<GlobalResponse<?>> handleMissingPart(MissingServletRequestPartException e) {
-        return respond(ErrorCode.BAD_REQUEST, e.getRequestPartName() + ": 파일이 필요합니다.");
-    }
-
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<GlobalResponse<?>> handleUploadSize(MaxUploadSizeExceededException e) {
-        return respond(ErrorCode.BAD_REQUEST, "업로드 용량을 초과했습니다. 음성은 10MiB 이하로 보내주세요.");
-    }
-
-    @ExceptionHandler(MultipartException.class)
-    public ResponseEntity<GlobalResponse<?>> handleMultipart(MultipartException e) {
-        return respond(ErrorCode.BAD_REQUEST, "multipart/form-data 업로드 형식이 올바르지 않습니다.");
+        return respond(ErrorCode.BAD_REQUEST, "Content-Type은 application/json이어야 합니다.");
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

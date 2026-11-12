@@ -1,6 +1,6 @@
 package com.likelionknu.dojang.basis;
 
-import com.likelionknu.dojang.analyze.service.LlmClient;
+import com.likelionknu.dojang.common.ai.LlmClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
