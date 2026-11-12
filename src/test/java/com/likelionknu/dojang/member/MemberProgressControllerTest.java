@@ -107,6 +107,19 @@ class MemberProgressControllerTest {
         read(auth).andExpect(jsonPath("$.data.services[0].status").isEmpty());
     }
 
+    @Test void 신청한_날을_저장하고_없으면_null() throws Exception {
+        save(auth, """
+                {"services":[{"id":"dev_rehab_voucher","status":"submitted","submitted_at":"2026-11-12"},
+                {"id":"parking_sticker","status":"already"}]}
+                """).andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.services[0].submitted_at").value("2026-11-12"));
+        read(auth).andExpect(jsonPath("$.data.services[0].submitted_at").value("2026-11-12"))
+                .andExpect(jsonPath("$.data.services[1].submitted_at").isEmpty());
+
+        save(auth, "{\"services\":[{\"id\":\"dev_rehab_voucher\",\"submitted_at\":\"11월 12일\"}]}")
+                .andExpect(status().isBadRequest());
+    }
+
     @Test void 미등록_서비스와_임의상태_중복_null원소를_저장하지_않는다() throws Exception {
         for (String invalid : new String[]{
                 "{\"services\":[{\"id\":\"missing_service\",\"status\":\"apply\"}]}",
