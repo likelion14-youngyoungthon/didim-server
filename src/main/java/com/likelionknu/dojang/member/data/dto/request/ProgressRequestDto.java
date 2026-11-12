@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /** 화면의 지금 상태를 통째로 덮어쓴다. */
@@ -17,6 +18,7 @@ public record ProgressRequestDto(
 
     public record ServiceStateDto(
             @Schema(example = "dev_rehab_voucher") @NotBlank @Pattern(regexp = "[a-z0-9_]+", message = "허용값이 아닙니다.") String id,
-            @Schema(example = "apply", description = "judge: apply, already, extra_form, check, auto / 사용자: submitted, approved, in_use / 기존 호환: applied. 대상 아님은 null을 그대로 저장") @Pattern(regexp = "[a-z0-9_]+", message = "허용값이 아닙니다.") String status) {
+            @Schema(example = "apply", description = "judge: apply, already, extra_form, check, auto / 사용자: submitted, approved, in_use / 기존 호환: applied. 대상 아님은 null을 그대로 저장") @Pattern(regexp = "[a-z0-9_]+", message = "허용값이 아닙니다.") String status,
+            @Schema(example = "2026-11-12", description = "신청한 날. 받은 그대로 저장") LocalDate submittedAt) {
     }
 }
