@@ -52,6 +52,22 @@ class BasisControllerTest {
     }
 
     @Test
+    void 같은_요청은_AI를_한_번만_부르고_section을_준다() throws Exception {
+        // 다른 테스트와 캐시 키가 겹치지 않게 age 7을 쓴다. tags 순서만 다른 요청은 같은 요청으로 본다
+        given(llmClient.extractJson(anyString(), anyString(), anyString(), any())).willReturn(JsonMapper.builder().build().readTree("""
+                {"quotes": [{"line": 0, "text": "18세 미만 장애아동", "matches": "age"}], "summary": "만 7세라서 나이 조건과 관련됩니다."}
+                """));
+
+        mvc.perform(get("/api/v1/services/dev_rehab_voucher/basis").param("age", "7").param("tags", "daycare", "has_car"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.quotes[0].section").value("지원대상"));
+        mvc.perform(get("/api/v1/services/dev_rehab_voucher/basis").param("tags", "has_car", "daycare").param("age", "7"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.summary").value("만 7세라서 나이 조건과 관련됩니다."));
+        then(llmClient).should(org.mockito.Mockito.times(1)).extractJson(anyString(), anyString(), anyString(), any());
+    }
+
+    @Test
     void 원문이_없는_서비스는_AI를_부르지_않는다() throws Exception {
         mvc.perform(get("/api/v1/services/parking_sticker/basis").param("age", "30"))
                 .andExpect(status().isOk())
