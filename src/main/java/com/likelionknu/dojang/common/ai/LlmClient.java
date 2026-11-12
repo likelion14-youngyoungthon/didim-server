@@ -1,4 +1,4 @@
-package com.likelionknu.dojang.analyze.service;
+package com.likelionknu.dojang.common.ai;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
