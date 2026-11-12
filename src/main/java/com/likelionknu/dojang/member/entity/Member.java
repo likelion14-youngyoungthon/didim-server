@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-/** 카카오 회원번호와 신청 현황만 둔다. 이름·연락처와 대화 내용은 저장하지 않는다. */
+/** 카카오 회원번호와 신청 현황만 둔다. 이름·연락처·닉네임은 저장하지 않는다. */
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

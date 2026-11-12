@@ -14,7 +14,7 @@ public class SwaggerConfiguration {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().info(new Info()
-                .title("도장 API")
+                .title("디딤 API")
                 .description("장애 등록 후 남은 복지 신청 안내 서비스")
                 .version("v1.0.0"))
                 // 로그인 API로 받은 access_token을 Authorize에 넣으면 /api/v1/me 를 호출할 수 있다
