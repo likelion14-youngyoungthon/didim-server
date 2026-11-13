@@ -144,7 +144,8 @@ public class JudgeService {
             new Basis(text(r, "confidence"), strings(r.path("source_urls")), strings(r.path("unverified_fields")), text(r.path("income"), "note")),
             text(r, "category"), JudgeCardMetadata.shortDescription(r, benefit), text(r, "description"),
             "check".equals(status) ? text(r, "check_reason") : null,
-            benefit, JudgeCardMetadata.conditions(q, r));
+            benefit, JudgeCardMetadata.conditions(q, r),
+            Optional.ofNullable(text(r, "office_note")).orElse("").contains("복지로 온라인"));
     }
 
     // -1: definitely outside the supplied interval; 0: cannot decide; 1: matches.

@@ -1,5 +1,7 @@
 package com.likelionknu.dojang.judge;
 
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -15,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class JudgeControllerTest {
     @Autowired MockMvc mvc;
+    @Autowired JsonMapper mapper;
 
     private static final String CHILD = """
             {"age":4,"disability_type":"autism","severity":"severe","dong":"백암면",
@@ -24,6 +32,28 @@ class JudgeControllerTest {
 
     private ResultActions judge(String body) throws Exception {
         return mvc.perform(post("/api/v1/judge").contentType(MediaType.APPLICATION_JSON).content(body));
+    }
+
+    @Test void 온라인_신청은_규칙표에_명시된_서비스만_안내한다() throws Exception {
+        assertOnlineServices(CHILD, Set.of("dev_rehab_voucher"));
+        String adult = CHILD.replace("\"age\":4", "\"age\":35").replace("autism", "hearing");
+        assertOnlineServices(adult, Set.of("pension_basic", "pension_additional", "disability_allowance",
+                "activity_support", "dd_day_activity", "assistive_device", "self_reliance_loan", "energy_voucher"));
+    }
+
+    private void assertOnlineServices(String request, Set<String> expected) throws Exception {
+        String body = judge(request).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        JsonNode data = mapper.readTree(body).path("data");
+        Set<String> actual = new HashSet<>();
+        data.properties().forEach(entry -> {
+            JsonNode service = entry.getValue();
+            assertTrue(service.path("online").isBoolean(), entry.getKey());
+            if (service.path("online").asBoolean()) {
+                actual.add(entry.getKey());
+                assertTrue(service.path("basis").path("sources").path(0).asString().startsWith("https://www.bokjiro.go.kr/"));
+            }
+        });
+        assertEquals(expected, actual);
     }
 
     @Test void 아동_시연_응답과_실제_창구_서식_근거() throws Exception {
