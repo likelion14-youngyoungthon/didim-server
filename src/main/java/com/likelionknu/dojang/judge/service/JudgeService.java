@@ -75,7 +75,7 @@ public class JudgeService {
     private JudgeResponseDto evaluate(JudgeRequestDto q, JsonNode r, Map<String, Office> offices) {
         String id = text(r, "id");
         List<String> notes = new ArrayList<>();
-        for (String field : List.of("age_note", "severity_note", "office_note", "note", "exclusive_note", "amount_note")) add(notes, text(r, field));
+        for (String field : List.of("note", "exclusive_note")) add(notes, text(r, field));
         add(notes, text(r.path("auto"), "note"));
         boolean excluded = false;
         boolean check = false;
@@ -111,7 +111,8 @@ public class JudgeService {
         }
         if (income < 0) excluded = true;
         if (income == 0) { check = true; add(notes, "소득 또는 세부 급여 요건 확인 필요"); }
-        if (EXTRA_CHECKS.containsKey(id)) { check = true; add(notes, EXTRA_CHECKS.get(id)); }
+        boolean preschoolDaycare = id.equals("disabled_childcare_fee") && q.age() < 6 && list(q.tags()).contains("daycare");
+        if (EXTRA_CHECKS.containsKey(id) && !preschoolDaycare) { check = true; add(notes, EXTRA_CHECKS.get(id)); }
         if (id.equals("disability_allowance") && q.age() <= 20) {
             check = true; add(notes, "18~20세 학교 재학·휴학에 따른 장애아동수당 적용 여부 확인 필요");
         }
@@ -141,14 +142,18 @@ public class JudgeService {
         String officeId = text(r, "office_id");
         Office office = offices.get(officeId);
         if (office == null) office = new Office(officeId, text(r, "office_note"), null);
+        Benefit benefit = JudgeCardMetadata.benefit(q, r);
         return new JudgeResponseDto(id, text(r, "name"), verdict, status, hidden, office, names, files,
             strings(r.path("documents")), integer(r, "processing_days"), text(r, "deadline"), List.copyOf(notes), fromAge,
             new Basis(text(r, "confidence"), strings(r.path("source_urls")), strings(r.path("unverified_fields")), text(r.path("income"), "note")),
+            text(r, "category"), JudgeCardMetadata.shortDescription(r, benefit), text(r, "description"),
+            "check".equals(status) ? text(r, "check_reason") : null,
+            benefit, JudgeCardMetadata.conditions(q, r),
             easyTextService.get(id));
     }
 
     // -1: definitely outside the supplied interval; 0: cannot decide; 1: matches.
-    private int income(JudgeRequestDto q, JsonNode rule) {
+    static int income(JudgeRequestDto q, JsonNode rule) {
         String type = text(rule, "type");
         if ("none".equals(type)) return 1;
         if ("basic_or_near_poor".equals(type)) return unknown(q.status()) ? 0 : Set.of("basic", "near_poor").contains(q.status()) ? 1 : -1;

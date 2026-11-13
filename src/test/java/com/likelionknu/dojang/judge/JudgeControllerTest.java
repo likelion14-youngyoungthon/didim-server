@@ -122,4 +122,129 @@ class JudgeControllerTest {
                     .andExpect(jsonPath("$.data").isEmpty());
         }
     }
+    private static final String LATEST_CHILD = CHILD.replace("\"household\":4", "\"household\":3")
+            .replace("le120", "le180");
+
+    @Test void 어린이집_다니는_네다섯살은_신청후보이고_여섯살부터_취학확인() throws Exception {
+        for (int age : new int[]{4, 5}) {
+            judge(LATEST_CHILD.replace("\"age\":4", "\"age\":" + age))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.disabled_childcare_fee.verdict").value("eligible"))
+                    .andExpect(jsonPath("$.data.disabled_childcare_fee.status").value("apply"))
+                    .andExpect(jsonPath("$.data.disabled_childcare_fee.hidden").value(false));
+        }
+        judge(LATEST_CHILD.replace("\"age\":4", "\"age\":6"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.verdict").value("check_needed"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.status").value("check"));
+        judge(LATEST_CHILD.replace("[\"daycare\"]", "[]"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.hidden").value(true))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.verdict").value("check_needed"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.status").value("check"));
+    }
+
+    @Test void 최신_시연_발달재활_표시정보와_서식_서류를_구분한다() throws Exception {
+        judge(LATEST_CHILD).andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.category").value("therapy"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.short_desc").value("월 18만원 · 본인부담 8만원"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.description").value("언어·놀이·감각 등 발달재활 치료비 이용권"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.benefit.amount").value("월 18만원"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.benefit.note").value("본인부담 8만원"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.conditions.length()").value(3))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.conditions[0].key").value("age"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.conditions[0].label").value("나이"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.conditions[0].rule").value("18세 미만"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.conditions[0].value").value("만 4세"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.conditions[0].met").value(true))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.notes.length()").value(1))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.notes[0]").value("9세 미만은 등록 전이라도 의뢰서와 검사자료로 신청 가능"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.form_names.length()").value(2))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.form_names", org.hamcrest.Matchers.not(org.hamcrest.Matchers.hasItem("발달재활서비스 의뢰서"))))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.documents", org.hamcrest.Matchers.hasItem("발달재활서비스 의뢰서")));
+    }
+
+    @Test void 네살_남은신청은_신청전5_확인2_공고1이고_센터신청서는5종이다() throws Exception {
+        String response = judge(LATEST_CHILD).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
+        var data = tools.jackson.databind.json.JsonMapper.builder().build().readTree(response).path("data");
+        int apply = 0, check = 0, provider = 0, already = 0, later = 0, center = 0;
+        java.util.Set<String> forms = new java.util.HashSet<>();
+        for (var item : data) {
+            if (item.path("hidden").asBoolean()) continue;
+            String state = item.path("status").asString();
+            if ("already".equals(state)) already++;
+            if ("not_eligible".equals(item.path("verdict").asString()) && item.path("eligible_from_age").isNumber()) later++;
+            if (state == null || !java.util.Set.of("apply", "check", "extra_form").contains(state)) continue;
+            String office = item.path("office").path("id").asString();
+            if ("provider".equals(office) && "apply".equals(state)) provider++;
+            else if ("apply".equals(state)) apply++;
+            if ("check".equals(state)) check++;
+            if ("dong_center".equals(office)) {
+                center++;
+                item.path("form_names").forEach(name -> forms.add(name.asString()));
+            }
+        }
+        org.junit.jupiter.api.Assertions.assertEquals(java.util.List.of(5, 2, 1, 2, 4, 5, 5),
+                java.util.List.of(apply, check, provider, already, later, center, forms.size()));
+    }
+
+    @Test void 미제공_표시정보는_null_필드를_유지한다() throws Exception {
+        ResultActions result = judge(LATEST_CHILD).andExpect(status().isOk());
+        for (String field : new String[]{"category", "short_desc", "description", "check_reason", "benefit", "conditions"}) {
+            result.andExpect(jsonPath("$.data.child_allowance", org.hamcrest.Matchers.hasKey(field)))
+                    .andExpect(jsonPath("$.data.child_allowance." + field).value(org.hamcrest.Matchers.nullValue()));
+        }
+    }
+
+    @Test void 발달재활_목록금액은_상세금액과_같고_모르면_금액없는_설명이다() throws Exception {
+        judge(LATEST_CHILD.replace("neither", "basic"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.short_desc").value("월 26만원"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.benefit.amount").value("월 26만원"));
+        judge(LATEST_CHILD.replace("neither", "near_poor"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.short_desc").value("월 24만원"))
+                .andExpect(jsonPath("$.data.dev_rehab_voucher.benefit.amount").value("월 24만원"));
+        for (String band : new String[]{"le120", "unknown", "over180"}) {
+            judge(LATEST_CHILD.replace("le180", band))
+                    .andExpect(jsonPath("$.data.dev_rehab_voucher.short_desc").value("발달재활 치료비 이용권"))
+                    .andExpect(jsonPath("$.data.dev_rehab_voucher.benefit").value(org.hamcrest.Matchers.nullValue()));
+        }
+    }
+
+    @Test void 다른_체험인물의_대표서비스도_전체판정과_함께_반환한다() throws Exception {
+        String adult = LATEST_CHILD.replace("[\"daycare\"]", "[]");
+        judge(adult.replace("\"age\":4", "\"age\":35").replace("autism", "hearing"))
+                .andExpect(jsonPath("$.data.activity_support.category").value("care"))
+                .andExpect(jsonPath("$.data.activity_support.conditions[0].value").value("만 35세"))
+                .andExpect(jsonPath("$.data.activity_support.conditions[0].met").value(true));
+        judge(adult.replace("\"age\":4", "\"age\":24"))
+                .andExpect(jsonPath("$.data.dd_day_activity.category").value("care"))
+                .andExpect(jsonPath("$.data.dd_day_activity.benefit.amount").value("기본형 월 132시간, 확장형 월 176시간 바우처"));
+        String senior = adult.replace("\"age\":4", "\"age\":72").replace("autism", "physical")
+                .replace("le180", "le120").replace("\"tags\":[]", "\"tags\":[\"wheelchair\"]");
+        judge(senior).andExpect(jsonPath("$.data.yongin_mobility_repair.benefit.amount").value("수리비의 50%"))
+                .andExpect(jsonPath("$.data.pension_additional").exists());
+        judge(senior.replace("neither", "basic"))
+                .andExpect(jsonPath("$.data.yongin_mobility_repair.benefit.amount").value("수리비 전액"));
+        judge(senior.replace("neither", "unknown"))
+                .andExpect(jsonPath("$.data.yongin_mobility_repair.benefit").value(org.hamcrest.Matchers.nullValue()));
+    }
+
+    @Test void 확인사유는_확인상태에서만_표시하고_재판정시_남지않는다() throws Exception {
+        judge(LATEST_CHILD).andExpect(jsonPath("$.data.special_education.check_reason").value("진단평가"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.check_reason").value(org.hamcrest.Matchers.nullValue()));
+        judge(LATEST_CHILD.replace("\"age\":4", "\"age\":6"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.check_reason").value("미취학 여부 확인"));
+        judge(LATEST_CHILD.replace("\"age\":4", "\"age\":13"))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.status").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.data.disabled_childcare_fee.check_reason").value(org.hamcrest.Matchers.nullValue()));
+    }
+
+    @Test void 등록항목_누락은_등록서식_서비스만_확인필요로_남긴다() throws Exception {
+        String body = LATEST_CHILD.replace("\"reg_items\":[\"fee_reductions_7\",\"parking_sticker\"],", "")
+                .replace("neither", "basic").replace("\"age\":4", "\"age\":6");
+        ResultActions result = judge(body).andExpect(status().isOk());
+        for (String id : new String[]{"fee_reductions_7", "parking_sticker", "activity_support", "assistive_device", "dd_individual_plan"}) {
+            result.andExpect(jsonPath("$.data." + id + ".status").value("check"));
+        }
+        result.andExpect(jsonPath("$.data.dev_rehab_voucher.status").value("apply"));
+    }
+
 }

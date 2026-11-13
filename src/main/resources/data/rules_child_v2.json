@@ -55,7 +55,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003198&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "dev_rehab_voucher",
@@ -93,8 +99,7 @@
       "office_note": "주소지 읍면동 행정복지센터 또는 복지로 온라인",
       "form_names": [
         "사회보장급여(사회서비스이용권) 신청(변경)서",
-        "법정대리인 동의서",
-        "발달재활서비스 의뢰서"
+        "법정대리인 동의서"
       ],
       "documents": [
         "발달재활서비스 의뢰서",
@@ -114,6 +119,45 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003195&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "therapy",
+      "short_desc": "발달재활 치료비 이용권",
+      "short_desc_from_benefit": true,
+      "description": "언어·놀이·감각 등 발달재활 치료비 이용권",
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "basic",
+          "amount": "월 26만원",
+          "note": null
+        },
+        {
+          "when": "near_poor",
+          "amount": "월 24만원",
+          "note": null
+        },
+        {
+          "when": "le180",
+          "amount": "월 18만원",
+          "note": "본인부담 8만원"
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "18세 미만"
+        },
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "뇌병변·지적·자폐성·청각·언어·시각"
+        },
+        {
+          "key": "income_band",
+          "label": "소득",
+          "rule": "기준 중위소득 180% 이하"
+        }
       ]
     },
     {
@@ -164,6 +208,29 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003262&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "care",
+      "short_desc": "아이돌봄 지원",
+      "description": null,
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "연 1,200시간, 월 160시간 이내 돌봄",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "18세 미만"
+        },
+        {
+          "key": "severity",
+          "label": "장애 정도",
+          "rule": "심한 장애"
+        }
       ]
     },
     {
@@ -214,6 +281,24 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000064&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "counsel",
+      "short_desc": "부모 상담 12개월",
+      "description": null,
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "12개월 지원, 1회 연장 가능",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "지적·자폐성"
+        }
       ]
     },
     {
@@ -265,6 +350,18 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001150&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "care",
+      "short_desc": "모집 시기 확인",
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": [
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "지적·자폐성"
+        }
       ]
     },
     {
@@ -319,6 +416,24 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001067&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "childcare",
+      "short_desc": "장애아반 월 634,000원",
+      "description": null,
+      "check_reason": "미취학 여부 확인",
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "장애아반 월 634,000원",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "13세 미만"
+        }
       ]
     },
     {
@@ -384,6 +499,29 @@
         "https://www.law.go.kr/법령/장애인등에대한특수교육법",
         "https://www.law.go.kr/법령/장애인등에대한특수교육법시행령",
         "https://www.law.go.kr/LSW/flDownload.do?gubun=&flSeq=162420185&bylClsCd=110201"
+      ],
+      "category": "education",
+      "short_desc": "만 3~17세 의무교육",
+      "description": null,
+      "check_reason": "진단평가",
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "만 3~17세 의무교육, 만 3세 미만 장애영아와 전공과는 무상",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "18세 미만"
+        },
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "시각·청각·지적·지체·자폐성·언어"
+        }
       ]
     },
     {
@@ -456,6 +594,29 @@
         "https://www.yonginnuri.or.kr/EgovPageLink.do?link=main/guide/iomGG_GuideInfo",
         "https://ggsts.gg.go.kr/resources/file/useInfo20260831.pdf",
         "https://www.law.go.kr/법령/교통약자의이동편의증진법시행규칙"
+      ],
+      "category": "transport",
+      "short_desc": "장애인 콜택시 1,700원부터",
+      "description": null,
+      "check_reason": "보행 어려움 서류",
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "기본 1,700원(10km), 5km당 100원 추가. 바우처택시 1,700원",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "뇌병변·시각·신장"
+        },
+        {
+          "key": "severity",
+          "label": "장애 정도",
+          "rule": "심한 장애"
+        }
       ]
     },
     {
@@ -508,7 +669,13 @@
         "https://dvoucher.kspo.or.kr/dvoucher/bbs/B0000078/view.do?nttId=63562&menuNo=800018&topMenuNo=800017"
       ],
       "birth_year_min": 1958,
-      "birth_year_max": 2022
+      "birth_year_max": 2022,
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "activity_support",
@@ -557,6 +724,24 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003260&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "care",
+      "short_desc": "월 이용권 · 6~64세",
+      "description": "활동지원사의 집안일·외출 도움 이용권",
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "등급별 월 바우처",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "6~64세"
+        }
       ]
     },
     {
@@ -615,7 +800,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003211&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "parking_sticker",
@@ -667,7 +858,13 @@
       ],
       "source_urls": [
         "https://www.law.go.kr/법령/장애인복지법시행규칙"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "dd_individual_plan",
@@ -716,6 +913,24 @@
       ],
       "source_urls": [
         "https://www.law.go.kr/법령/발달장애인권리보장및지원에관한법률"
+      ],
+      "category": "counsel",
+      "short_desc": "필요한 지원 계획 세우기",
+      "description": null,
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "현금 아님(계획 수립)",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "지적·자폐성"
+        }
       ]
     },
     {
@@ -761,7 +976,13 @@
         "income",
         "processing_days"
       ],
-      "source_urls": []
+      "source_urls": [],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "pension_basic",
@@ -804,7 +1025,13 @@
       "note": "아동에게는 언제부터 해당되는지 안내용",
       "confidence": "official",
       "unverified_fields": [],
-      "source_urls": []
+      "source_urls": [],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "disability_allowance",
@@ -847,7 +1074,13 @@
       "note": "아동에게는 언제부터 해당되는지 안내용",
       "confidence": "official",
       "unverified_fields": [],
-      "source_urls": []
+      "source_urls": [],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     }
   ]
 }
