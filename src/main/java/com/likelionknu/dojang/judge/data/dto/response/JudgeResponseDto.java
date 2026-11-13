@@ -8,7 +8,7 @@ public record JudgeResponseDto(String id, String name, String verdict, String st
         Office office, List<String> formNames, List<FormFile> formFiles, List<String> documents,
         Integer processingDays, String deadline, List<String> notes, Integer eligibleFromAge, Basis basis,
         String category, String shortDesc, String description, String checkReason,
-        Benefit benefit, List<Condition> conditions, JsonNode easy) {
+        Benefit benefit, List<Condition> conditions, boolean online, JsonNode easy) {
     public record Office(String id, String name, String phone) {}
     public record FormFile(String name, String url) {}
     public record Basis(String confidence, List<String> sources, List<String> unverified, String incomeNote) {}

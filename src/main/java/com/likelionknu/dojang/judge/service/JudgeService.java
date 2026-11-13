@@ -149,6 +149,7 @@ public class JudgeService {
             text(r, "category"), JudgeCardMetadata.shortDescription(r, benefit), text(r, "description"),
             "check".equals(status) ? text(r, "check_reason") : null,
             benefit, JudgeCardMetadata.conditions(q, r),
+            Optional.ofNullable(text(r, "office_note")).orElse("").contains("복지로 온라인"),
             easyTextService.get(id));
     }
 
