@@ -16,6 +16,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -154,6 +155,113 @@ class JudgeControllerTest {
     }
     private static final String LATEST_CHILD = CHILD.replace("\"household\":4", "\"household\":3")
             .replace("le120", "le180");
+
+    @Test void 판정_오류_코드와_메시지가_명세와_일치한다() throws Exception {
+        String[][] cases = {
+                {LATEST_CHILD.replace("\"age\":4,", ""), "age: 널이어서는 안됩니다"},
+                {LATEST_CHILD.replace("\"age\":4", "\"age\":-1"), "age: 0 이상이어야 합니다"},
+                {LATEST_CHILD.replace("\"household\":3", "\"household\":0"), "household: 1 이상이어야 합니다"},
+                {LATEST_CHILD.replace("autism", "invalid"), "disability_type: 허용되지 않은 값입니다."},
+                {LATEST_CHILD.replace("severe", "invalid"), "severity: 허용되지 않은 값입니다."},
+                {LATEST_CHILD.replace("neither", "invalid"), "status: 허용되지 않은 값입니다."},
+                {LATEST_CHILD.replace("le180", "invalid"), "income_band: 허용되지 않은 값입니다."},
+                {LATEST_CHILD.replace("fee_reductions_7", "invalid"), "reg_items: 허용되지 않은 항목입니다."},
+                {LATEST_CHILD.replace("daycare", "invalid"), "tags: 허용되지 않은 값입니다."},
+                {LATEST_CHILD.replace("백암면", "없는동"), "dong: 용인시 읍면동이 아닙니다."},
+                {LATEST_CHILD.replace("\"dong\":\"백암면\",", ""), "dong: 용인시 읍면동이 아닙니다."},
+                {"{", "잘못된 요청입니다."}
+        };
+        for (String[] item : cases) {
+            judge(item[0]).andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.code").value("E400"))
+                    .andExpect(jsonPath("$.data").value(org.hamcrest.Matchers.nullValue()))
+                    .andExpect(jsonPath("$.message").value(item[1]));
+        }
+        mvc.perform(post("/api/v1/judge").contentType(MediaType.TEXT_PLAIN).content(LATEST_CHILD))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("E400"))
+                .andExpect(jsonPath("$.message").value("Content-Type은 application/json이어야 합니다."));
+        mvc.perform(get("/api/v1/judge"))
+                .andExpect(status().isMethodNotAllowed()).andExpect(jsonPath("$.code").value("E405"))
+                .andExpect(jsonPath("$.message").value("지원하지 않는 요청 방식입니다."));
+    }
+
+    @Test void 판정_응답의_키와_JSON_타입을_검증한다() throws Exception {
+        for (String request : new String[]{LATEST_CHILD, LATEST_CHILD.replace("\"age\":4", "\"age\":35").replace("autism", "hearing")}) {
+            assertJudgeResponseTypes(mapper.readTree(judge(request).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()));
+        }
+    }
+
+    private void assertJudgeResponseTypes(JsonNode root) {
+        assertEquals(Set.of("code", "data", "message"), keys(root));
+        assertTrue(root.path("data").isObject());
+        Set<String> expected = Set.of("id", "name", "verdict", "status", "hidden", "office", "form_names", "form_files",
+                "documents", "processing_days", "deadline", "notes", "eligible_from_age", "basis", "category", "short_desc",
+                "description", "check_reason", "benefit", "conditions", "online");
+        for (var item : root.path("data")) {
+            assertEquals(expected, keys(item)); // easy is a separate AI contract.
+            for (String field : new String[]{"id", "name", "verdict"}) assertTrue(item.path(field).isString(), field);
+            for (String field : new String[]{"status", "deadline", "category", "short_desc", "description", "check_reason"})
+                assertTrue(item.path(field).isNull() || item.path(field).isString(), field);
+            for (String field : new String[]{"hidden", "online"}) assertTrue(item.path(field).isBoolean(), field);
+            for (String field : new String[]{"processing_days", "eligible_from_age"})
+                assertTrue(item.path(field).isNull() || item.path(field).isIntegralNumber(), field);
+            for (String field : new String[]{"form_names", "documents", "notes"}) assertStrings(item.path(field));
+            assertEquals(Set.of("id", "name", "phone"), keys(item.path("office")));
+            for (String field : new String[]{"id", "name", "phone"}) assertNullableString(item.path("office").path(field));
+            assertEquals(Set.of("confidence", "sources", "unverified", "income_note"), keys(item.path("basis")));
+            assertNullableString(item.path("basis").path("confidence"));
+            assertNullableString(item.path("basis").path("income_note"));
+            assertStrings(item.path("basis").path("sources"));
+            assertStrings(item.path("basis").path("unverified"));
+            assertTrue(item.path("form_files").isArray());
+            for (var form : item.path("form_files")) {
+                assertEquals(Set.of("name", "url"), keys(form));
+                assertTrue(form.path("name").isString());
+                assertTrue(form.path("url").isNull() || form.path("url").isString());
+            }
+            var benefit = item.path("benefit");
+            assertTrue(benefit.isNull() || benefit.isObject());
+            if (benefit.isObject()) {
+                assertEquals(Set.of("amount", "note"), keys(benefit));
+                assertNullableString(benefit.path("amount"));
+                assertNullableString(benefit.path("note"));
+            }
+            var conditions = item.path("conditions");
+            assertTrue(conditions.isNull() || conditions.isArray());
+            for (var condition : conditions) {
+                assertEquals(Set.of("key", "label", "rule", "value", "met"), keys(condition));
+                for (String field : new String[]{"key", "label", "rule", "value"}) assertNullableString(condition.path(field));
+                assertTrue(condition.path("met").isNull() || condition.path("met").isBoolean());
+            }
+        }
+    }
+
+    private void assertNullableString(JsonNode node) { assertTrue(node.isNull() || node.isString()); }
+
+    private Set<String> keys(JsonNode node) {
+        Set<String> result = new HashSet<>();
+        node.properties().forEach(entry -> result.add(entry.getKey()));
+        return result;
+    }
+
+    private void assertStrings(JsonNode node) {
+        assertTrue(node.isArray());
+        node.forEach(value -> assertTrue(value.isString()));
+    }
+
+    @Test void 예상하지_못한_서버오류도_명세의_E500으로_반환한다() throws Exception {
+        var service = org.mockito.Mockito.mock(com.likelionknu.dojang.judge.service.JudgeService.class);
+        org.mockito.Mockito.when(service.judge(org.mockito.ArgumentMatchers.any()))
+                .thenThrow(new IllegalStateException("contract test failure"));
+        var isolatedMvc = org.springframework.test.web.servlet.setup.MockMvcBuilders
+                .standaloneSetup(new com.likelionknu.dojang.judge.controller.JudgeController(service))
+                .setControllerAdvice(new com.likelionknu.dojang.common.response.GlobalExceptionHandler()).build();
+        isolatedMvc.perform(post("/api/v1/judge").contentType(MediaType.APPLICATION_JSON).content(LATEST_CHILD))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.code").value("E500"))
+                .andExpect(jsonPath("$.data").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.message").value("서버 오류가 발생했습니다."));
+    }
 
     @Test void 어린이집_다니는_네다섯살은_신청후보이고_여섯살부터_취학확인() throws Exception {
         for (int age : new int[]{4, 5}) {

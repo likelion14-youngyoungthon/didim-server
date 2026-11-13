@@ -47,7 +47,12 @@ class ServiceListControllerTest {
         assertEquals("장애아동수당", services.get(0).path("name").asString());
         assertTrue(services.get(0).path("category").isNull());
         assertEquals("therapy", services.get(1).path("category").asString());
-        services.forEach(service -> assertEquals(3, service.size()));
+        services.forEach(service -> {
+            assertEquals(3, service.size());
+            assertTrue(service.path("id").isString());
+            assertTrue(service.path("name").isString());
+            assertTrue(service.path("category").isString() || service.path("category").isNull());
+        });
     }
 
     @Test void 나이_경계와_등록신청서_항목을_규칙표대로_처리한다() throws Exception {
@@ -82,6 +87,7 @@ class ServiceListControllerTest {
         }
         mvc.perform(post("/api/v1/services"))
                 .andExpect(status().isMethodNotAllowed())
-                .andExpect(jsonPath("$.code").value("E405"));
+                .andExpect(jsonPath("$.code").value("E405"))
+                .andExpect(jsonPath("$.message").value("지원하지 않는 요청 방식입니다."));
     }
 }
