@@ -1,6 +1,7 @@
 package com.likelionknu.dojang.common.response;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -8,6 +9,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -35,7 +37,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GlobalResponse<?>> handleParameterValidation(HandlerMethodValidationException e) {
         String detail = e.getParameterValidationResults().stream()
                 .findFirst()
-                .map(result -> result.getMethodParameter().getParameterName() + ": " + result.getResolvableErrors().getFirst().getDefaultMessage())
+                .map(result -> parameterName(result.getMethodParameter()) + ": " + result.getResolvableErrors().getFirst().getDefaultMessage())
                 .orElse(ErrorCode.BAD_REQUEST.getMessage());
         log.warn("요청 파라미터 검증 실패: {}", detail);
         return respond(ErrorCode.BAD_REQUEST, detail);
@@ -76,6 +78,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GlobalResponse<?>> handleException(Exception e) {
         log.error("처리되지 않은 예외", e);
         return respond(ErrorCode.INTERNAL_ERROR, ErrorCode.INTERNAL_ERROR.getMessage());
+    }
+
+    // 자바 변수 이름(disabilityType) 대신 요청에 쓰는 이름(disability_type)을 보여준다
+    private static String parameterName(MethodParameter parameter) {
+        RequestParam requestParam = parameter.getParameterAnnotation(RequestParam.class);
+        return requestParam == null || requestParam.name().isEmpty() ? parameter.getParameterName() : requestParam.name();
     }
 
     private ResponseEntity<GlobalResponse<?>> respond(ErrorCode errorCode, String message) {

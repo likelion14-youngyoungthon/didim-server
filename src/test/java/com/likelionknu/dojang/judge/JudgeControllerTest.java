@@ -196,9 +196,10 @@ class JudgeControllerTest {
         assertTrue(root.path("data").isObject());
         Set<String> expected = Set.of("id", "name", "verdict", "status", "hidden", "office", "form_names", "form_files",
                 "documents", "processing_days", "deadline", "notes", "eligible_from_age", "basis", "category", "short_desc",
-                "description", "check_reason", "benefit", "conditions", "online");
+                "description", "check_reason", "benefit", "conditions", "online", "easy");
         for (var item : root.path("data")) {
-            assertEquals(expected, keys(item)); // easy is a separate AI contract.
+            assertEquals(expected, keys(item));
+            assertTrue(item.path("easy").isNull() || item.path("easy").isObject(), "easy");
             for (String field : new String[]{"id", "name", "verdict"}) assertTrue(item.path(field).isString(), field);
             for (String field : new String[]{"status", "deadline", "category", "short_desc", "description", "check_reason"})
                 assertTrue(item.path(field).isNull() || item.path(field).isString(), field);
