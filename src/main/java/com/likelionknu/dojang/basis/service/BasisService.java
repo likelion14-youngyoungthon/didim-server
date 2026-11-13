@@ -20,10 +20,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 카드 상세 "왜 해당되나요". 서비스 id로 원문(welfare_texts.json)을 찾고, AI가 사용자 값과 관련된 문장을 고른다.
  * 인용문은 원문 문장에 그대로 있는 것만 내보낸다. 원문은 scripts/fetch_welfare_texts.py로 받는다.
+ * 같은 서비스와 같은 사용자 값이면 처음 결과를 다시 쓴다(AI 호출이 몇 초 걸려서).
  */
 @Slf4j
 @Service
@@ -37,7 +39,7 @@ public class BasisService {
             - line: 고른 문장 번호
             - text: 그 문장에서 조건 부분만 한 글자도 바꾸지 않고 복사한다. 자르기 어려우면 문장 전체를 쓴다.
             - matches: 그 문장이 다루는 사용자 값의 key. 사용자 값 중에 없으면 null
-            - summary: 사용자 값과 고른 조건이 어떻게 연결되는지 한국어 1~2문장. 원문에 없는 내용을 더하지 않는다.
+            - summary: 사용자 값과 고른 조건이 어떻게 연결되는지 한국어 1~2문장. 원문에 없는 내용을 더하지 않는다. 가운뎃점(·) 대신 쉼표를 쓴다.
               받을 수 있다고 단정하지 않는다. "~조건과 관련됩니다", "~를 확인해 보세요"처럼 쓴다.
               key 이름이나 영문을 쓰지 않는다. 예: "만 4세, 자폐성 장애로 나이와 장애 유형 조건과 관련됩니다."
             """;
@@ -68,13 +70,15 @@ public class BasisService {
             "income_band", linked("le120", "기준 중위소득 120% 이하", "le180", "기준 중위소득 180% 이하", "over180", "그보다 많음"),
             "tags", linked("daycare", "어린이집 다님", "has_car", "차 있음", "wheelchair", "휠체어 사용", "newborn", "출산"));
 
-    private record Line(String text, String source) {
+    private record Line(String text, String source, String section) {
     }
 
     private final LlmClient llmClient;
     private final JsonMapper jsonMapper;
     private final LocalDate checkedAt;
     private final Map<String, List<Line>> linesByService = new HashMap<>();
+    // ponytail: 크기 제한 없는 캐시. 입력 조합이 몇백 개 수준이라 충분하고, 늘어나면 LRU로 바꾼다
+    private final Map<String, BasisResponseDto> cache = new ConcurrentHashMap<>();
 
     public BasisService(LlmClient llmClient, JsonMapper jsonMapper) throws IOException {
         this.llmClient = llmClient;
@@ -94,7 +98,7 @@ public class BasisService {
             List<Line> lines = new ArrayList<>();
             for (String id : ids) {
                 JsonNode text = texts.path("services").path(id);
-                text.path("lines").forEach(line -> lines.add(new Line(line.path("text").asString(), text.path("source").asString())));
+                text.path("lines").forEach(line -> lines.add(new Line(line.path("text").asString(), text.path("source").asString(), line.path("section").asString(null))));
             }
             linesByService.put(serviceId, lines);
         });
@@ -110,6 +114,11 @@ public class BasisService {
             return new BasisResponseDto(List.of(), null);
         }
 
+        String key = serviceId + jsonMapper.writeValueAsString(sorted(facts));
+        BasisResponseDto cached = cache.get(key);
+        if (cached != null) {
+            return cached;
+        }
         JsonNode result;
         try {
             result = llmClient.extractJson(SYSTEM, prompt(lines, facts), "basis", SCHEMA);
@@ -117,7 +126,18 @@ public class BasisService {
             log.warn("카드 근거 AI 호출 실패: {}", e.getClass().getSimpleName());
             throw new BasisException(ErrorCode.AI_FAILED, ErrorCode.AI_FAILED.getMessage());
         }
-        return toResponse(lines, facts, result);
+        // 실패는 캐시하지 않는다(위에서 예외로 빠짐)
+        BasisResponseDto response = toResponse(lines, facts, result);
+        cache.put(key, response);
+        return response;
+    }
+
+    // 키 순서와 tags 순서가 달라도 같은 요청으로 본다
+    private static Map<String, Object> sorted(Map<String, Object> facts) {
+        Map<String, Object> sorted = new java.util.TreeMap<>();
+        facts.forEach((key, value) -> sorted.put(key, value instanceof List<?> list
+                ? list.stream().map(String::valueOf).sorted().toList() : value));
+        return sorted;
     }
 
     private String prompt(List<Line> lines, Map<String, Object> facts) {
@@ -155,11 +175,12 @@ public class BasisService {
                 matches = null;
             }
             if (seen.add(text)) {
-                quotes.add(new QuoteDto(text, matches, line.source(), checkedAt));
+                quotes.add(new QuoteDto(text, matches, line.source(), checkedAt, line.section()));
             }
         }
 
-        String summary = result.path("summary").asString("").strip();
+        // 프롬프트로 막아도 가끔 섞여 나와서 코드로 한 번 더 바꾼다
+        String summary = result.path("summary").asString("").replace("·", ", ").strip();
         if (quotes.isEmpty() || summary.isEmpty()) {
             summary = null;
         } else if (summary.length() > MAX_SUMMARY) {

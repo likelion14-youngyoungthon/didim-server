@@ -44,12 +44,10 @@ public class ServiceStepsService {
     }
 
     private ServiceStepsResponseDto response(JsonNode rule, Map<String, String> offices) {
-        JsonNode processingDays = rule.path("processing_days");
-        Integer days = processingDays.isNumber() ? processingDays.asInt() : null;
         return new ServiceStepsResponseDto(text(rule, "id"), List.of(
                 new Step("prepare", "서류 준비", null, true),
                 new Step("submit", submissionLabel(rule, offices), null, false),
-                new Step("review", "자격 심사", days, false),
+                new Step("review", "자격 심사", null, false),
                 new Step("result", "결과 안내", null, false)));
     }
 

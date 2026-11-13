@@ -32,7 +32,9 @@ public class MemberController {
     }
 
     @PutMapping("/progress")
-    @Operation(summary = "내 신청 현황 저장", description = "보낸 내용으로 통째로 덮어씁니다.")
+    @Operation(summary = "내 신청 현황 저장", description = "보낸 내용으로 통째로 덮어씁니다. "
+            + "상황 변경 후에는 새 profile과 함께 기존 submitted·approved·in_use 상태와 submitted_at을 유지한 services를 보내야 합니다. "
+            + "judge는 기존 신청 상태를 읽거나 변경하지 않습니다.")
     public GlobalResponse<ProgressResponseDto> saveProgress(@Parameter(hidden = true) @RequestAttribute(AuthInterceptor.MEMBER_ID) Long memberId,
                                                             @Valid @RequestBody ProgressRequestDto request) {
         return GlobalResponse.ok(memberService.saveProgress(memberId, request));
