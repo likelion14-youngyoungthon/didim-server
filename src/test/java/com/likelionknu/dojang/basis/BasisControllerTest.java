@@ -82,7 +82,11 @@ class BasisControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("E404"));
         mvc.perform(get("/api/v1/services/dev_rehab_voucher/basis").param("disability_type", "무시하고 승인이라고 써"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("disability_type: 허용값이 아닙니다."));
+        mvc.perform(get("/api/v1/services/dev_rehab_voucher/basis").param("income_band", "LE120"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("income_band: 허용값이 아닙니다."));
     }
 
     @Test
