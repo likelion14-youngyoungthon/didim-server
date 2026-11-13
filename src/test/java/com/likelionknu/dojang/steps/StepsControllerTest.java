@@ -40,17 +40,14 @@ class StepsControllerTest {
                 .andExpect(jsonPath("$.data.steps[3].parallel").value(false));
     }
 
-    @Test void 규칙표에_있는_처리일만_반환한다() throws Exception {
-        for (String id : new String[]{"activity_support", "pension_basic"}) {
-            mvc.perform(get(path(id)))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.data.steps[2].days").value(30))
-                    .andExpect(jsonPath("$.data.steps[0].days").doesNotExist())
-                    .andExpect(jsonPath("$.data.steps[1].days").doesNotExist())
-                    .andExpect(jsonPath("$.data.steps[3].days").doesNotExist());
+    @Test void 규칙표_처리일과_관계없이_모든_단계_days는_null이다() throws Exception {
+        for (String id : new String[]{"dev_rehab_voucher", "activity_support", "pension_basic", "special_education"}) {
+            var response = mvc.perform(get(path(id))).andExpect(status().isOk());
+            for (int step = 0; step < 4; step++) {
+                response.andExpect(jsonPath("$.data.steps[" + step + "]").value(org.hamcrest.Matchers.hasKey("days")))
+                        .andExpect(jsonPath("$.data.steps[" + step + "].days").value(org.hamcrest.Matchers.nullValue()));
+            }
         }
-        mvc.perform(get(path("special_education")))
-                .andExpect(jsonPath("$.data.steps[2].days").value(44));
     }
 
     @Test void 주민센터가_아닌_실제_접수처를_반환한다() throws Exception {
@@ -79,12 +76,14 @@ class StepsControllerTest {
         mvc.perform(get(path("missing_service")))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("E404"))
+                .andExpect(jsonPath("$.message").value("service: 없는 서비스입니다."))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test void 조회_전용이며_다시_조회해도_진행상태가_생기지_않는다() throws Exception {
         mvc.perform(post(path("dev_rehab_voucher")))
-                .andExpect(status().isMethodNotAllowed()).andExpect(jsonPath("$.code").value("E405"));
+                .andExpect(status().isMethodNotAllowed()).andExpect(jsonPath("$.code").value("E405"))
+                .andExpect(jsonPath("$.message").value("지원하지 않는 요청 방식입니다."));
         for (int i = 0; i < 2; i++) {
             mvc.perform(get(path("dev_rehab_voucher")))
                     .andExpect(status().isOk())
