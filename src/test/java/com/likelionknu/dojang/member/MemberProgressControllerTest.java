@@ -15,7 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import tools.jackson.databind.json.JsonMapper;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -38,6 +40,7 @@ class MemberProgressControllerTest {
     @Autowired MockMvc mvc;
     @Autowired MemberRepository repository;
     @Autowired JwtProvider jwtProvider;
+    @Autowired JsonMapper mapper;
     @MockitoBean KakaoClient kakaoClient;
     private Member member;
     private String auth;
@@ -151,6 +154,33 @@ class MemberProgressControllerTest {
                 .andExpect(status().isOk());
         read(auth).andExpect(jsonPath("$.data.profile.income_band").value("unknown"))
                 .andExpect(jsonPath("$.data.services[0].status").value("submitted"));
+    }
+
+    @Test void 상황변경_재판정후_기존진행내역을_함께보내면_새프로필과_보존한다() throws Exception {
+        for (String state : new String[]{"submitted", "approved", "in_use"}) {
+            String initial = SNAPSHOT.replace("\"status\":\"submitted\"",
+                    "\"status\":\"" + state + "\",\"submitted_at\":\"2026-11-12\"");
+            save(auth, initial).andExpect(status().isOk());
+            String before = read(auth).andReturn().getResponse().getContentAsString();
+            String changed = initial.replace("le120", "over180").replace("백암면", "포곡읍");
+            if ("in_use".equals(state)) changed = changed.replace("\"age\":4", "\"age\":18");
+            Object profile = JsonPath.read(changed, "$.profile");
+            var judged = mvc.perform(post("/api/v1/judge").contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(profile))).andExpect(status().isOk());
+            if ("in_use".equals(state)) judged.andExpect(jsonPath("$.data.dev_rehab_voucher").doesNotExist());
+            else judged.andExpect(jsonPath("$.data.dev_rehab_voucher.verdict").value("not_eligible"));
+            // judge is public and does not mutate persisted progress.
+            assertThat(read(auth).andReturn().getResponse().getContentAsString()).isEqualTo(before);
+
+            // The caller retains progressed services even when the new rule table omits them.
+            Object retainedServices = JsonPath.read(before, "$.data.services");
+            save(auth, mapper.writeValueAsString(Map.of("profile", profile, "services", retainedServices)))
+                    .andExpect(status().isOk());
+            read(auth).andExpect(jsonPath("$.data.profile.dong").value("포곡읍"))
+                    .andExpect(jsonPath("$.data.profile.income_band").value("over180"))
+                    .andExpect(jsonPath("$.data.services[0].status").value(state))
+                    .andExpect(jsonPath("$.data.services[0].submitted_at").value("2026-11-12"));
+        }
     }
 
     @Test void 인증없거나_탈퇴한_회원은_저장할_수_없다() throws Exception {
