@@ -73,7 +73,13 @@
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003249&wlfareInfoReldBztpCd=01",
         "https://www.law.go.kr/법령/장애인연금법"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "pension_additional",
@@ -122,7 +128,13 @@
       "unverified_fields": [],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003249&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "disability_allowance",
@@ -176,7 +188,13 @@
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003265&wlfareInfoReldBztpCd=01",
         "https://www.law.go.kr/법령/장애인복지법시행규칙"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "activity_support",
@@ -224,6 +242,24 @@
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003260&wlfareInfoReldBztpCd=01",
         "https://www.law.go.kr/법령/장애인활동지원에관한법률"
+      ],
+      "category": "care",
+      "short_desc": "월 이용권 · 6~64세",
+      "description": "활동지원사의 집안일·외출 도움 이용권",
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "활동지원등급별 월 바우처, 본인부담금 있음",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "6~64세"
+        }
       ]
     },
     {
@@ -272,7 +308,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004586&wlfareInfoReldBztpCd=02"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "dd_day_activity",
@@ -326,6 +368,29 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001165&wlfareInfoReldBztpCd=01"
+      ],
+      "category": "care",
+      "short_desc": "낮 활동 · 한 달 132시간 또는 176시간",
+      "description": "낮에 사람들과 함께 활동하는 서비스예요.",
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "기본형 월 132시간, 확장형 월 176시간 바우처",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "age",
+          "label": "나이",
+          "rule": "18~64세"
+        },
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "지적·자폐성"
+        }
       ]
     },
     {
@@ -377,6 +442,24 @@
       ],
       "source_urls": [
         "https://www.law.go.kr/법령/발달장애인권리보장및지원에관한법률"
+      ],
+      "category": "counsel",
+      "short_desc": "필요한 지원 계획 세우기",
+      "description": null,
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "현금 아님(계획 수립)",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "지적·자폐성"
+        }
       ]
     },
     {
@@ -449,6 +532,29 @@
         "https://www.yonginnuri.or.kr/EgovPageLink.do?link=main/guide/iomGG_GuideInfo",
         "https://ggsts.gg.go.kr/resources/file/useInfo20260831.pdf",
         "https://www.law.go.kr/법령/교통약자의이동편의증진법시행규칙"
+      ],
+      "category": "transport",
+      "short_desc": "장애인 콜택시 1,700원부터",
+      "description": null,
+      "check_reason": "보행 어려움 서류",
+      "benefit": [
+        {
+          "when": "any",
+          "amount": "기본 1,700원(10km), 5km당 100원 추가. 바우처택시 1,700원",
+          "note": null
+        }
+      ],
+      "conditions": [
+        {
+          "key": "disability_type",
+          "label": "장애 유형",
+          "rule": "뇌병변·시각·신장"
+        },
+        {
+          "key": "severity",
+          "label": "장애 정도",
+          "rule": "심한 장애"
+        }
       ]
     },
     {
@@ -508,7 +614,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003211&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "medicaid_assistive_device",
@@ -555,7 +667,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000067&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "medical_cost",
@@ -603,7 +721,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003181&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "diagnosis_fee",
@@ -653,7 +777,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000099&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "yongin_diagnosis_extra",
@@ -704,7 +834,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001492&wlfareInfoReldBztpCd=02"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "self_reliance_loan",
@@ -755,7 +891,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000026&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "parking_sticker",
@@ -809,7 +951,13 @@
       ],
       "source_urls": [
         "https://www.law.go.kr/법령/장애인복지법시행규칙"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "fee_reductions_7",
@@ -858,7 +1006,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/CmmFileUtil/getDownload.do?atcflId=20230308UUWBM1330460025167326&atcflSn=1"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "transport_discounts",
@@ -908,7 +1062,13 @@
       "source_urls": [
         "https://www.wikitree.co.kr/articles/1156230",
         "https://www.bokjiro.go.kr/ssis-tbu/CmmFileUtil/getDownload.do?atcflId=20230308UUWBM1330460025167326&atcflSn=1"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "car_excise_tax",
@@ -966,7 +1126,13 @@
         "https://www.incheon.go.kr/welfare/WE070101/view?nttNo=8567",
         "https://www.hyundai.com/kr/ko/e/customer/guide/system/tax-car",
         "https://www.law.go.kr/법령/개별소비세법"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "health_insurance_reduction",
@@ -1014,7 +1180,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006257&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "sports_voucher",
@@ -1066,7 +1238,13 @@
         "https://dvoucher.kspo.or.kr/dvoucher/bbs/B0000078/view.do?nttId=63562&menuNo=800018&topMenuNo=800017"
       ],
       "birth_year_min": 1958,
-      "birth_year_max": 2022
+      "birth_year_max": 2022,
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "housing_modification",
@@ -1115,7 +1293,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006260&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "job_program",
@@ -1165,7 +1349,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000025&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "employment_package",
@@ -1215,7 +1405,13 @@
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004655&wlfareInfoReldBztpCd=01",
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003245&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "energy_voucher",
@@ -1266,7 +1462,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000072&wlfareInfoReldBztpCd=01"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "yongin_birth_grant",
@@ -1324,7 +1526,13 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005510&wlfareInfoReldBztpCd=02"
-      ]
+      ],
+      "category": null,
+      "short_desc": null,
+      "description": null,
+      "check_reason": null,
+      "benefit": null,
+      "conditions": null
     },
     {
       "id": "yongin_mobility_repair",
@@ -1379,7 +1587,29 @@
       ],
       "source_urls": [
         "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000866&wlfareInfoReldBztpCd=02"
-      ]
+      ],
+      "category": "care",
+      "short_desc": "수급·차상위 수리비 전액(연 20만원 이내) · 그 외 50%(연 10만원 이내)",
+      "description": "휠체어와 전동스쿠터 수리비를 도와줘요.",
+      "check_reason": null,
+      "benefit": [
+        {
+          "when": "basic",
+          "amount": "수리비 전액",
+          "note": "연 20만원 이내"
+        },
+        {
+          "when": "near_poor",
+          "amount": "수리비 전액",
+          "note": "연 20만원 이내"
+        },
+        {
+          "when": "neither",
+          "amount": "수리비의 50%",
+          "note": "연 10만원 이내"
+        }
+      ],
+      "conditions": null
     }
   ]
 }
