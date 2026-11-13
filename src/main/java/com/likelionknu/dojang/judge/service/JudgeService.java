@@ -1,5 +1,7 @@
 package com.likelionknu.dojang.judge.service;
 
+import com.likelionknu.dojang.easy.service.EasyTextService;
+
 import com.likelionknu.dojang.judge.data.dto.request.JudgeRequestDto;
 import com.likelionknu.dojang.judge.data.dto.response.JudgeResponseDto;
 import com.likelionknu.dojang.judge.data.dto.response.JudgeResponseDto.*;
@@ -37,9 +39,11 @@ public class JudgeService {
     private final List<JsonNode> adultRules;
     private final OfficeService officeService;
     private final Set<String> regItemIds;
+    private final EasyTextService easyTextService;
 
-    public JudgeService(JsonMapper mapper, OfficeService officeService, RegItemService regItemService) throws IOException {
+    public JudgeService(JsonMapper mapper, OfficeService officeService, RegItemService regItemService, EasyTextService easyTextService) throws IOException {
         this.officeService = officeService;
+        this.easyTextService = easyTextService;
         this.regItemIds = new HashSet<>();
         regItemService.getRegItems().forEach(item -> regItemIds.add(item.id()));
         childRules = load(mapper, "data/rules_child_v2.json");
@@ -139,7 +143,8 @@ public class JudgeService {
         if (office == null) office = new Office(officeId, text(r, "office_note"), null);
         return new JudgeResponseDto(id, text(r, "name"), verdict, status, hidden, office, names, files,
             strings(r.path("documents")), integer(r, "processing_days"), text(r, "deadline"), List.copyOf(notes), fromAge,
-            new Basis(text(r, "confidence"), strings(r.path("source_urls")), strings(r.path("unverified_fields")), text(r.path("income"), "note")));
+            new Basis(text(r, "confidence"), strings(r.path("source_urls")), strings(r.path("unverified_fields")), text(r.path("income"), "note")),
+            easyTextService.get(id));
     }
 
     // -1: definitely outside the supplied interval; 0: cannot decide; 1: matches.

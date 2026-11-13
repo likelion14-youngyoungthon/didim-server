@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * OpenAI Chat Completions 호출. response_format json_schema로 정해진 형식의 JSON만 받는다.
- * 키는 환경변수 LLM_API_KEY, 모델은 LLM_MODEL(기본 gpt-5-mini).
+ * 키는 환경변수 LLM_API_KEY, 모델은 LLM_MODEL(기본 gpt-6-luna).
  */
 @Component
 public class LlmClient {
@@ -24,7 +24,7 @@ public class LlmClient {
     private final String apiKey;
     private final String model;
 
-    public LlmClient(JsonMapper jsonMapper, @Value("${LLM_API_KEY:}") String apiKey, @Value("${LLM_MODEL:gpt-5-mini}") String model) {
+    public LlmClient(JsonMapper jsonMapper, @Value("${LLM_API_KEY:}") String apiKey, @Value("${LLM_MODEL:gpt-6-luna}") String model) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(5_000);
         factory.setReadTimeout(30_000);

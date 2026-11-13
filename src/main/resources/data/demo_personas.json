@@ -1,0 +1,41 @@
+{
+  "note": "체험 인물 4명(피그마 A1-2)의 /judge 요청. 서버 시작 때 이 값으로 카드 근거를 미리 만들어 둔다. 프론트 프리셋도 같은 값을 써야 미리 만든 결과를 바로 받는다.",
+  "personas": [
+    {
+      "id": "child_4",
+      "label": "4세 자폐성 장애 아이의 엄마",
+      "request": {
+        "age": 4, "disability_type": "autism", "severity": "severe", "dong": "백암면", "household": 3,
+        "status": "neither", "income_band": "le180", "reg_items": ["fee_reductions_7", "parking_sticker"],
+        "reg_items_unknown": false, "tags": ["daycare"]
+      }
+    },
+    {
+      "id": "senior_72",
+      "label": "72세 휠체어를 쓰는 어르신",
+      "request": {
+        "age": 72, "disability_type": "physical", "severity": "severe", "dong": "백암면", "household": 2,
+        "status": "near_poor", "income_band": "le120", "reg_items": ["fee_reductions_7", "parking_sticker"],
+        "reg_items_unknown": false, "tags": ["wheelchair"]
+      }
+    },
+    {
+      "id": "hearing_35",
+      "label": "35세 청각장애가 있는 성인",
+      "request": {
+        "age": 35, "disability_type": "hearing", "severity": "severe", "dong": "역북동", "household": 1,
+        "status": "neither", "income_band": "le180", "reg_items": ["fee_reductions_7"],
+        "reg_items_unknown": false, "tags": []
+      }
+    },
+    {
+      "id": "autism_24",
+      "label": "24세 자폐성 장애가 있는 본인",
+      "request": {
+        "age": 24, "disability_type": "autism", "severity": "severe", "dong": "백암면", "household": 3,
+        "status": "neither", "income_band": "le120", "reg_items": ["fee_reductions_7"],
+        "reg_items_unknown": false, "tags": []
+      }
+    }
+  ]
+}
