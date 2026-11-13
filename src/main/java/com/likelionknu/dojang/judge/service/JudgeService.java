@@ -3,6 +3,7 @@ package com.likelionknu.dojang.judge.service;
 import com.likelionknu.dojang.judge.data.dto.request.JudgeRequestDto;
 import com.likelionknu.dojang.judge.data.dto.response.JudgeResponseDto;
 import com.likelionknu.dojang.judge.data.dto.response.JudgeResponseDto.*;
+import com.likelionknu.dojang.judge.data.dto.response.ServiceListResponseDto;
 import com.likelionknu.dojang.judge.exception.JudgeException;
 import com.likelionknu.dojang.office.service.OfficeService;
 import com.likelionknu.dojang.regitem.service.RegItemService;
@@ -66,6 +67,20 @@ public class JudgeService {
             result.put(item.id(), item);
         }
         return result;
+    }
+
+    public List<ServiceListResponseDto> listServices(Integer age) {
+        if (age == null) throw new JudgeException("age: 값이 필요합니다.");
+        if (age < 0) throw new JudgeException("age: 0 이상이어야 합니다.");
+        List<JsonNode> rules = age < 18 ? childRules : adultRules;
+        return rules.stream()
+                .filter(rule -> {
+                    Integer min = integer(rule, "age_min"), max = integer(rule, "age_max");
+                    return (min == null || age >= min) && (max == null || age <= max)
+                            && text(rule, "reg_form_item") == null;
+                })
+                .map(rule -> new ServiceListResponseDto(text(rule, "id"), text(rule, "name"), text(rule, "category")))
+                .toList();
     }
 
     private JudgeResponseDto evaluate(JudgeRequestDto q, JsonNode r, Map<String, Office> offices) {
