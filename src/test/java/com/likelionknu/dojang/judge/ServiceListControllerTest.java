@@ -40,10 +40,10 @@ class ServiceListControllerTest {
         return ids;
     }
 
-    @Test void 네살은_따로_신청할_복지_여덟개를_규칙표_순서로_반환한다() throws Exception {
+    @Test void 네살은_따로_신청할_복지_아홉개를_규칙표_순서로_반환한다() throws Exception {
         JsonNode services = services("4");
         assertEquals(List.of("child_allowance", "dev_rehab_voucher", "family_care_support", "dd_parent_counsel",
-                "dd_family_rest", "disabled_childcare_fee", "special_education", "special_transport"), ids(services));
+                "dd_family_rest", "disabled_childcare_fee", "special_education", "special_transport", "sports_voucher"), ids(services));
         assertEquals("장애아동수당", services.get(0).path("name").asString());
         assertTrue(services.get(0).path("category").isNull());
         assertEquals("therapy", services.get(1).path("category").asString());
@@ -66,8 +66,8 @@ class ServiceListControllerTest {
         assertFalse(adult18.contains("child_allowance"));
         assertFalse(adult18.contains("self_reliance_loan"));
         assertTrue(ids(services("19")).contains("self_reliance_loan"));
-        assertTrue(ids(services("69")).contains("sports_voucher"));
-        assertFalse(ids(services("70")).contains("sports_voucher"));
+        assertTrue(ids(services("68")).contains("sports_voucher"));
+        assertFalse(ids(services("69")).contains("sports_voucher"));
         for (String id : List.of("dd_individual_plan", "transport_discounts", "employment_package")) {
             assertFalse(age0.contains(id));
             assertFalse(adult18.contains(id));

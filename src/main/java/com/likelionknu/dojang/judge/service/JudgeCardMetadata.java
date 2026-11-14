@@ -40,6 +40,10 @@ final class JudgeCardMetadata {
     }
 
     static List<Condition> conditions(JudgeRequestDto request, JsonNode rule) {
+        return conditions(request, rule, java.time.Year.now(java.time.ZoneId.of("Asia/Seoul")).getValue());
+    }
+
+    static List<Condition> conditions(JudgeRequestDto request, JsonNode rule, int currentYear) {
         JsonNode definitions = rule.path("conditions");
         if (!definitions.isArray()) return null;
         List<Condition> result = new ArrayList<>();
@@ -50,7 +54,10 @@ final class JudgeCardMetadata {
             if ("age".equals(key)) {
                 value = "만 " + request.age() + "세";
                 Integer min = number(rule, "age_min"), max = number(rule, "age_max");
-                if (min != null || max != null) {
+                if (BirthYearEligibility.applies(rule)) {
+                    int match = BirthYearEligibility.match(request.age(), rule, currentYear);
+                    met = match == 0 ? null : match > 0;
+                } else if (min != null || max != null) {
                     if (min != null && request.age() < min) met = false;
                     else if (max != null && request.age() > max) {
                         // These services have exceptions that the request cannot resolve.
