@@ -10,10 +10,14 @@ import com.likelionknu.dojang.judge.exception.JudgeException;
 import com.likelionknu.dojang.office.service.OfficeService;
 import com.likelionknu.dojang.regitem.service.RegItemService;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 import java.io.IOException;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -33,7 +37,6 @@ public class JudgeService {
         Map.entry("yongin_birth_grant", "출산한 장애인 부모 여부·180일 거주·신청 기한 확인 필요"),
         Map.entry("car_excise_tax", "차량 구입·명의·가구 요건 확인 필요"),
         Map.entry("diagnosis_fee", "신규 등록·재판정 구분 및 세부 급여 자격 확인 필요"),
-        Map.entry("sports_voucher", "지원 연도별 출생연도 기준과 모집·선정 여부 확인 필요"),
         Map.entry("disabled_childcare_fee", "미취학 여부 및 어린이집 이용·입소 예정 확인 필요")
     );
     private final List<JsonNode> childRules;
@@ -41,8 +44,16 @@ public class JudgeService {
     private final OfficeService officeService;
     private final Set<String> regItemIds;
     private final EasyTextService easyTextService;
+    private final Clock clock;
 
+    @Autowired
     public JudgeService(JsonMapper mapper, OfficeService officeService, RegItemService regItemService, EasyTextService easyTextService) throws IOException {
+        this(mapper, officeService, regItemService, easyTextService, Clock.system(ZoneId.of("Asia/Seoul")));
+    }
+
+    JudgeService(JsonMapper mapper, OfficeService officeService, RegItemService regItemService,
+                 EasyTextService easyTextService, Clock clock) throws IOException {
+        this.clock = clock;
         this.officeService = officeService;
         this.easyTextService = easyTextService;
         this.regItemIds = new HashSet<>();
@@ -77,11 +88,14 @@ public class JudgeService {
         if (age == null) throw new JudgeException("age: 값이 필요합니다.");
         if (age < 0) throw new JudgeException("age: 0 이상이어야 합니다.");
         List<JsonNode> rules = age < 18 ? childRules : adultRules;
+        int year = LocalDate.now(clock).getYear();
         return rules.stream()
                 .filter(rule -> {
                     Integer min = integer(rule, "age_min"), max = integer(rule, "age_max");
-                    return (min == null || age >= min) && (max == null || age <= max)
-                            && text(rule, "reg_form_item") == null;
+                    boolean ageMatches = BirthYearEligibility.applies(rule)
+                            ? BirthYearEligibility.match(age, rule, year) >= 0
+                            : (min == null || age >= min) && (max == null || age <= max);
+                    return ageMatches && text(rule, "reg_form_item") == null;
                 })
                 .map(rule -> new ServiceListResponseDto(text(rule, "id"), text(rule, "name"), text(rule, "category")))
                 .toList();
@@ -95,7 +109,16 @@ public class JudgeService {
         boolean excluded = false;
         boolean check = false;
         Integer fromAge = null;
+        int year = LocalDate.now(clock).getYear();
         Integer min = integer(r, "age_min"), max = integer(r, "age_max");
+        if (BirthYearEligibility.applies(r)) {
+            int match = BirthYearEligibility.match(q.age(), r, year);
+            excluded = match < 0;
+            check = match == 0;
+            if (check) add(notes, "출생연도 확인 필요: " + text(r, "age_note"));
+            min = null;
+            max = null;
+        }
         if (min != null && q.age() < min) { excluded = true; fromAge = min; }
         if (max != null && q.age() > max) {
             if (Set.of("activity_support", "yongin_activity_extra", "dd_day_activity", "employment_package").contains(id)) {
@@ -128,6 +151,7 @@ public class JudgeService {
         if (income == 0) { check = true; add(notes, "소득 또는 세부 급여 요건 확인 필요"); }
         boolean preschoolDaycare = id.equals("disabled_childcare_fee") && q.age() < 6 && list(q.tags()).contains("daycare");
         if (EXTRA_CHECKS.containsKey(id) && !preschoolDaycare) { check = true; add(notes, EXTRA_CHECKS.get(id)); }
+        if (id.equals("sports_voucher")) add(notes, "신청 후보 안내이며 최종 선정은 시군구에서 결정합니다.");
         if (id.equals("disability_allowance") && q.age() <= 20) {
             check = true; add(notes, "18~20세 학교 재학·휴학에 따른 장애아동수당 적용 여부 확인 필요");
         }
@@ -163,7 +187,7 @@ public class JudgeService {
             new Basis(text(r, "confidence"), strings(r.path("source_urls")), strings(r.path("unverified_fields")), text(r.path("income"), "note")),
             text(r, "category"), JudgeCardMetadata.shortDescription(r, benefit), text(r, "description"),
             "check".equals(status) ? text(r, "check_reason") : null,
-            benefit, JudgeCardMetadata.conditions(q, r),
+            benefit, JudgeCardMetadata.conditions(q, r, year),
             Optional.ofNullable(text(r, "office_note")).orElse("").contains("복지로 온라인"),
             easyTextService.get(id));
     }
