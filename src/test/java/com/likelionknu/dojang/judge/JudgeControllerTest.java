@@ -84,8 +84,9 @@ class JudgeControllerTest {
     }
 
     @Test void 나이_하한과_성인_분기() throws Exception {
-        judge(CHILD).andExpect(jsonPath("$.data.sports_voucher.verdict").value("not_eligible"))
-                .andExpect(jsonPath("$.data.sports_voucher.eligible_from_age").value(5));
+        judge(CHILD).andExpect(jsonPath("$.data.sports_voucher.verdict").value("eligible"))
+                .andExpect(jsonPath("$.data.sports_voucher.status").value("apply"))
+                .andExpect(jsonPath("$.data.sports_voucher.eligible_from_age").isEmpty());
         judge(CHILD.replace("\"age\":4", "\"age\":18"))
                 .andExpect(jsonPath("$.data.child_allowance").doesNotExist())
                 .andExpect(jsonPath("$.data.pension_additional").exists());
@@ -301,7 +302,7 @@ class JudgeControllerTest {
                 .andExpect(jsonPath("$.data.dev_rehab_voucher.documents", org.hamcrest.Matchers.hasItem("발달재활서비스 의뢰서")));
     }
 
-    @Test void 네살_남은신청은_신청전5_확인2_공고1이고_센터신청서는5종이다() throws Exception {
+    @Test void 네살_남은신청은_신청전6_확인2_공고1이고_센터신청서는5종이다() throws Exception {
         String response = judge(LATEST_CHILD).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
         var data = tools.jackson.databind.json.JsonMapper.builder().build().readTree(response).path("data");
         int apply = 0, check = 0, provider = 0, already = 0, later = 0, center = 0;
@@ -321,7 +322,7 @@ class JudgeControllerTest {
                 item.path("form_names").forEach(name -> forms.add(name.asString()));
             }
         }
-        org.junit.jupiter.api.Assertions.assertEquals(java.util.List.of(5, 2, 1, 2, 4, 5, 5),
+        org.junit.jupiter.api.Assertions.assertEquals(java.util.List.of(6, 2, 1, 2, 3, 5, 5),
                 java.util.List.of(apply, check, provider, already, later, center, forms.size()));
     }
 
