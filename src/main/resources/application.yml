@@ -10,6 +10,10 @@ spring:
   jpa:
     open-in-view: false
 
+# nginx가 넘기는 X-Forwarded-Proto를 읽어 Swagger 주소를 https로 만든다
+server:
+  forward-headers-strategy: framework
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
